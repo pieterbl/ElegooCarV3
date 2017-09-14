@@ -7,7 +7,6 @@
 #include "ElegooMoveCommand.h"
 #include "ElegooInfraredConfigInterface.h"
 
-
 class ElegooInfraredReceiver
 {
 private:
@@ -30,7 +29,7 @@ public:
 
 	void setup()
 	{
-		pinMode(config.RECEIVER_PIN, INPUT); // TODO is this OK ??
+		pinMode(config.RECEIVER_PIN, INPUT);
 		irrecv = new IRrecv(config.RECEIVER_PIN);
 		irrecv->enableIRIn();
 	}
@@ -62,6 +61,7 @@ public:
 	}
 
 private:
+
 	ElegooMoveCommand checkInfraredProviders(unsigned long resultsValue)
 	{
 		for (int i = 0; i < numInfraredConfigs; i++)

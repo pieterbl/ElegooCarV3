@@ -91,13 +91,13 @@ private:
 	void setDirection(const int direction)
 	{
 		int adjustedDirection = direction;
-		if (direction < 45) // TODO hard-coded (sometimes value 10 or 20 is better here)
+		if (direction < 0) // TODO hard-coded (sometimes value 10 or 20 is better here)
 		{
-			adjustedDirection = 45; // TODO hard-coded (sometimes value 10 or 20 is better here)
+			adjustedDirection = 0; // TODO hard-coded (sometimes value 10 or 20 is better here)
 		}
-		if (direction > 150) // TODO REPAIR
+		if (direction > 180)
 		{
-			adjustedDirection = 150; // TODO REPAIR
+			adjustedDirection = 180;
 		}
 		servo.write(adjustedDirection);
 
