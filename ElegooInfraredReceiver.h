@@ -6,6 +6,7 @@
 
 #include "ElegooMoveCommand.h"
 #include "ElegooInfraredConfigInterface.h"
+#include "ElegooCarConfig.h"
 
 class ElegooInfraredReceiver
 {

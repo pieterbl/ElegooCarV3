@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include <Servo.h>
+#include "ElegooCarConfig.h"
 
 class ElegooDistanceUnit
 {
 private:
-	static const int ECHO = A4; // TODO hard-coded
-	static const int TRIGGER = A5; // TODO hard-coded
+	ElegooCarConfig::DistanceUnitConfig & config;
+
 	Servo servo;
 
 	static const int RIGHT = 20; // TODO hard-coded (sometimes value 10 or 20 is better here)
@@ -38,15 +39,17 @@ private:
 
 public:
 
-	ElegooDistanceUnit()
+	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig):
+		config(pConfig),
+		servo()
 	{
 	}
 
 	void setup()
 	{
-		servo.attach(3); // TODO hard-coded
-		pinMode(ECHO, INPUT); // TODO hard-coded
-		pinMode(TRIGGER, OUTPUT); // TODO hard-coded
+		servo.attach(config.SERVO_PIN);
+		pinMode(config.ECHO_PIN, INPUT);
+		pinMode(config.TRIGGER_PIN, INPUT);
 	}
 
 	void test()
@@ -106,15 +109,15 @@ private:
 	}
 
 	// ultrasonic distance measurement function
-	static int readDistance()
+	int readDistance()
 	{
-		digitalWrite(TRIGGER, LOW);
+		digitalWrite(config.TRIGGER_PIN, LOW);
 		delayMicroseconds(2);
-		digitalWrite(TRIGGER, HIGH);
+		digitalWrite(config.TRIGGER_PIN, HIGH);
 		delayMicroseconds(20);
-		digitalWrite(TRIGGER, LOW);
+		digitalWrite(config.TRIGGER_PIN, LOW);
 
-		float fDistance = pulseIn(ECHO, HIGH);
+		float fDistance = pulseIn(config.ECHO_PIN, HIGH);
 		fDistance = fDistance / 58;
 		return (int) fDistance;
 	}
