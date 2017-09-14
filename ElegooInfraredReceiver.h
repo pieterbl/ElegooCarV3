@@ -30,8 +30,8 @@ public:
 
 	void setup()
 	{
+		pinMode(config.RECEIVER_PIN, INPUT); // TODO is this OK ??
 		irrecv = new IRrecv(config.RECEIVER_PIN);
-		pinMode(config.RECEIVER_PIN, INPUT);
 		irrecv->enableIRIn();
 	}
 

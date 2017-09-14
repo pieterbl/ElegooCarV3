@@ -31,3 +31,5 @@
 *.out
 *.app
 /Release/
+/.cproject
+/.ino.cpp
