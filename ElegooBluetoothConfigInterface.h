@@ -2,7 +2,7 @@
 #ifndef __ELEGOO_BLUETOOTH_CONFIG_INTERFACE_H__
 #define __ELEGOO_BLUETOOTH_CONFIG_INTERFACE_H__
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include "ElegooMoveCommand.h"
 
 class ElegooBluetoothConfigInterface

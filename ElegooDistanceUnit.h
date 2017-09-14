@@ -1,7 +1,7 @@
 #ifndef __ELEGOO_DISTANCE_UNIT_H__
 #define __ELEGOO_DISTANCE_UNIT_H__
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <Servo.h>
 
 class ElegooDistanceUnit

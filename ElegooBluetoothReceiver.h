@@ -1,7 +1,7 @@
 #ifndef __ELEGOO_BLUETOOTH_RECEIVER_H__
 #define __ELEGOO_BLUETOOTH_RECEIVER_H__
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include "ElegooCarConfig.h"
 #include "ElegooMoveCommand.h"
 #include "ElegooBluetoothConfigInterface.h"
