@@ -1,35 +1,9 @@
 
-#include "Arduino.h"
-#include "ElegooInfraredConfig.h"
-
-class PanasonicInfraredConfig: public ElegooInfraredConfigInterface // TODO move to own header file
-{
-public:
-	virtual ElegooMoveCommand checkCommand(unsigned long possibleCommandCode)
-	{
-		switch (possibleCommandCode)
-		{
-		case 3810251948:
-			return ElegooMoveCommand::MOVE_FORWARDS;
-		case 4025005874:
-			return ElegooMoveCommand::TURN_RIGHT;
-		case 3039307748:
-			return ElegooMoveCommand::TURN_LEFT;
-		case 2830352306:
-			return ElegooMoveCommand::MOVE_BACKWARDS;
-		case 3416630992:
-			return ElegooMoveCommand::STOP_MOVING;
-		default:
-			return ElegooMoveCommand::UNKNOWN_CMD;
-		}
-	}
-
-	virtual ~PanasonicInfraredConfig()
-	{
-	}
-};
+#include <Arduino.h>
 
 #include "ElegooCarV3.h"
+#include "ElegooInfraredConfig.h"
+#include "PanasonicInfraredConfig.h"
 #include "MyBluetoothConfig.h"
 
 ElegooCarV3 * car = NULL;
@@ -53,5 +27,3 @@ void loop()
 {
 	car->drive();
 }
-
-

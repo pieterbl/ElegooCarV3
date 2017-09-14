@@ -1,37 +1,31 @@
-
-#ifndef __ELEGOO_INFRARED_CONFIG_H__
-#define __ELEGOO_INFRARED_CONFIG_H__
+#ifndef __PANASONIC_INFRARED_CONFIG_H__
+#define __PANASONIC_INFRARED_CONFIG_H__
 
 #include "ElegooInfraredConfigInterface.h"
 
-class ElegooInfraredConfig: public ElegooInfraredConfigInterface
+class PanasonicInfraredConfig: public ElegooInfraredConfigInterface
 {
 public:
 	virtual ElegooMoveCommand checkCommand(unsigned long possibleCommandCode)
 	{
 		switch (possibleCommandCode)
 		{
-		case 5316027:
-		case 16736925:
+		case 3810251948:
 			return ElegooMoveCommand::MOVE_FORWARDS;
-		case 16761405:
-		case 553536955:
+		case 4025005874:
 			return ElegooMoveCommand::TURN_RIGHT;
-		case 16720605:
-		case 1386468383:
+		case 3039307748:
 			return ElegooMoveCommand::TURN_LEFT;
-		case 16754775:
-		case 2747854299:
+		case 2830352306:
 			return ElegooMoveCommand::MOVE_BACKWARDS;
-		case 16712445:
-		case 3622325019:
+		case 3416630992:
 			return ElegooMoveCommand::STOP_MOVING;
 		default:
 			return ElegooMoveCommand::UNKNOWN_CMD;
 		}
 	}
 
-	virtual ~ElegooInfraredConfig()
+	virtual ~PanasonicInfraredConfig()
 	{
 	}
 };
