@@ -151,7 +151,7 @@ public:
 	void testServo()
 	{
 		Serial.println("Test Servo");
-		distUnit.testServo();
+		// distUnit.testServo(); // TODO make it work
 		Serial.println();
 	}
 
@@ -169,7 +169,7 @@ public:
 		do
 		{
 			cmd = infraredReceiver.readCommand();
-			//	const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			//	const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd); // TODO make it work
 			//	Serial.println(cmdString);
 		} //
 		while (cmd != ElegooMoveCommand::STOP_MOVING);
@@ -181,7 +181,7 @@ public:
 		do
 		{
 			cmd = bluetoothReceiver.readCommand();
-			// const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			// const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd); // TODO make it work
 			// Serial.println(cmdString);
 		} //
 		while (cmd != ElegooMoveCommand::STOP_MOVING);
