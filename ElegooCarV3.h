@@ -57,11 +57,21 @@ public:
 		bluetoothReceiver.registerBluetoothConfig(bluetoothConfig);
 	}
 
+	bool manualMode = false;
+
 	int drive()
 	{
-		// TODO pressing forward or backward should set: manual override, manual direction, backward to stay backward until changed
 		ElegooMoveCommand moveCmd = readMoveCommand();
-		processMoveCommand(moveCmd);
+		if (moveCmd != ElegooMoveCommand::UNKNOWN_CMD)
+		{
+			manualMode = true;
+			processMoveCommand(moveCmd);
+		}
+
+		if (manualMode == true) // TODO test manual mode
+		{
+			return STATUS_OK;
+		}
 
 		const int frontDistance = distUnit.frontDistance();
 		if (frontDistance > safetyDistanceInCM)
@@ -136,20 +146,46 @@ private:
 		switch (cmd)
 		{
 		case ElegooMoveCommand::MOVE_FORWARDS:
-			return motorUnit.moveForwards();
+			motorUnit.moveForwards();
+			delay(1000);
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
+		case ElegooMoveCommand::MOVE_BACKWARDS:
+			motorUnit.moveBackwards();
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
+		case ElegooMoveCommand::HALF_RIGHT:
+			motorUnit.turnRight(); // once
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
 		case ElegooMoveCommand::TURN_RIGHT:
-		case ElegooMoveCommand::HALF_RIGHT: // TODO HALF_RIGHT still to be supported
-			return motorUnit.turnRight();
+			motorUnit.turnRight(); // once
+			// motorUnit.turnRight(); // TODO twice
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
+		case ElegooMoveCommand::HALF_LEFT:
+			motorUnit.turnLeft(); // once
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
 		case ElegooMoveCommand::TURN_LEFT:
-		case ElegooMoveCommand::HALF_LEFT: // TODO HALF_LEFT still to be supported
-			return motorUnit.turnLeft();
-		case ElegooMoveCommand::MOVE_BACKWARDS: // TODO initiate manual override, we get here due to remote-control button-press
-			return motorUnit.moveBackwards();
-		case ElegooMoveCommand::STOP_MOVING: // TODO initiate manual override, we get here due to remote-control button-press
-			return motorUnit.stopMoving();
+			motorUnit.turnLeft(); // once
+			// motorUnit.turnLeft(); // TODO twice
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
+		case ElegooMoveCommand::STOP_MOVING:
+			motorUnit.stopMoving();
+			return STATUS_OK;
+
 		case ElegooMoveCommand::UNKNOWN_CMD:
 			return STATUS_OK;
 		}
+
 		return STATUS_OK;
 	}
 
@@ -190,14 +226,6 @@ public:
 				return;
 			}
 		}
-	}
-
-	void testMotorUnit()
-	{
-		motorUnit.moveForwards();
-		motorUnit.moveBackwards();
-		motorUnit.turnLeft();
-		motorUnit.turnRight();
 	}
 
 };

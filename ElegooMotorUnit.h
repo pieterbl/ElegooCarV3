@@ -24,11 +24,6 @@ private:
 		analogWrite(ENB, speed);
 	}
 
-	void printLine(const char * message)
-	{
-		Serial.println(message);
-	}
-
 public:
 
 	void setup()
@@ -48,7 +43,7 @@ public:
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN3, LOW);
 		digitalWrite(IN4, HIGH);
-		printLine("Move Forwards");
+		Serial.println("Move Forwards");
 		return STATUS_OK;
 	}
 
@@ -59,7 +54,7 @@ public:
 		digitalWrite(IN2, HIGH);
 		digitalWrite(IN3, HIGH);
 		digitalWrite(IN4, LOW);
-		printLine("Move Backwards");
+		Serial.println("Move Backwards");
 		delay(500);
 		return STATUS_OK;
 	}
@@ -71,7 +66,7 @@ public:
 		digitalWrite(IN2, HIGH);
 		digitalWrite(IN3, LOW);
 		digitalWrite(IN4, HIGH);
-		printLine("Turn Left");
+		Serial.println("Turn Left");
 		delay(500);
 		return STATUS_OK;
 	}
@@ -83,7 +78,7 @@ public:
 		digitalWrite(IN2, LOW);
 		digitalWrite(IN3, HIGH);
 		digitalWrite(IN4, LOW);
-		printLine("Turn Right");
+		Serial.println("Turn Right");
 		delay(500);
 		return STATUS_OK;
 	}
@@ -92,7 +87,7 @@ public:
 	{
 		digitalWrite(ENA, LOW);
 		digitalWrite(ENB, LOW);
-		printLine("Stop Moving");
+		Serial.println("Stop Moving");
 		delay(500);
 		return STATUS_OK;
 	}

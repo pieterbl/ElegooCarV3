@@ -134,10 +134,12 @@ private:
 		setDirection(direction);
 		int distance = readDistance();
 
+#if DEBUG_THE_CAR
 		Serial.print("Direction ");
 		Serial.print(getDirectionString(direction));
 		Serial.print(" = ");
 		Serial.println(distance);
+#endif
 
 		return distance;
 	}

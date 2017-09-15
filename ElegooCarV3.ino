@@ -29,10 +29,10 @@ void setup() // TODO test the car
 	// TODO more tests
 	//car->testInfrared();
 	//car->testBluetooth();
-	//car->testMotorUnit();
 }
 
 void loop()
 {
+	car->manualMode = true;
 	car->drive();
 }

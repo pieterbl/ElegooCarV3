@@ -42,7 +42,7 @@ public:
 		numInfraredConfigs++;
 	}
 
-	ElegooMoveCommand readCommand()
+	ElegooMoveCommand readCommandOld() // TODO delete
 	{
 		decode_results results;
 
@@ -60,6 +60,30 @@ public:
 
 		ElegooMoveCommand moveCommand = checkInfraredProviders(resultsValue);
 		return moveCommand;
+	}
+
+	ElegooMoveCommand readCommand()
+	{
+		ElegooMoveCommand resultsCommand = ElegooMoveCommand::UNKNOWN_CMD;
+
+		decode_results results;
+		while (irrecv->decode(&results)) // read all infrared input which we have
+		{
+			unsigned long resultsValue = results.value;
+			irrecv->resume();
+			delay(150);
+
+			Serial.print("Infrared result: ");
+			Serial.println(resultsValue);
+
+			ElegooMoveCommand moveCommand = checkInfraredProviders(resultsValue); // check for known code
+			if (resultsCommand == ElegooMoveCommand::UNKNOWN_CMD) // if no known code yet
+			{
+				resultsCommand = moveCommand;
+			}
+		}
+
+		return resultsCommand;
 	}
 
 private:
