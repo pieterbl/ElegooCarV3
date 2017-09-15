@@ -1,4 +1,3 @@
-
 #ifndef __ELEGOO_INFRARED_CONFIG_H__
 #define __ELEGOO_INFRARED_CONFIG_H__
 

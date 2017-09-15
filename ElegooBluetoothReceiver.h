@@ -16,10 +16,10 @@ private:
 
 	int numBluetoothConfigs = 0;
 
-
 public:
 
-	ElegooBluetoothReceiver(ElegooCarConfig::BluetoothReceiverConfig & pConfig): config(pConfig)
+	ElegooBluetoothReceiver(ElegooCarConfig::BluetoothReceiverConfig & pConfig) :
+			config(pConfig)
 	{
 		int size = config.MAX_NUM_RECEIVERS;
 		bluetoothConfigs = new ElegooBluetoothConfigInterface*[size];

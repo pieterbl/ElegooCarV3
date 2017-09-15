@@ -1,4 +1,3 @@
-
 #ifndef __ELEGOO_INFRARED_CONFIG_INTERFACE_H__
 #define __ELEGOO_INFRARED_CONFIG_INTERFACE_H__
 
@@ -13,6 +12,5 @@ public:
 	{
 	}
 };
-
 
 #endif

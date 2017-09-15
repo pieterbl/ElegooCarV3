@@ -22,7 +22,8 @@ private:
 
 public:
 
-	ElegooInfraredReceiver(ElegooCarConfig::InfraredReceiverConfig & pConfig): config(pConfig)
+	ElegooInfraredReceiver(ElegooCarConfig::InfraredReceiverConfig & pConfig) :
+			config(pConfig)
 	{
 		int size = config.MAX_NUM_RECEIVERS;
 		infraredConfigs = new ElegooInfraredConfigInterface*[size];
