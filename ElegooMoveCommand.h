@@ -9,7 +9,7 @@ enum ElegooMoveCommand
 class ElegooMoveCommandUtil
 {
 public:
-	const char* getMoveCommandString(ElegooMoveCommand moveCommand)
+	static const char* getMoveCommandString(ElegooMoveCommand moveCommand)
 	{
 		switch (moveCommand)
 		{

@@ -12,28 +12,32 @@ private:
 
 	Servo servo;
 
-	static const int RIGHT = 0;
 	static const int HALF_RIGHT = 45;
 	static const int FRONT = 90;
 	static const int HALF_LEFT = 135;
-	static const int LEFT = 180;
 
 	const char* getDirectionString(const int direction)
 	{
+		if (direction == config.SERVO_RIGHT)
+		{
+			return "Right";
+		}
+
+		if (direction == config.SERVO_LEFT)
+		{
+			return "Left";
+		}
+
 		switch (direction)
 		{
-		case RIGHT:
-			return "Right";
 		case HALF_RIGHT:
-			return "Half-Right";
+			return "Half Right";
 		case FRONT:
 			return "Front";
 		case HALF_LEFT:
-			return "Half-Left";
-		case LEFT:
-			return "Left";
+			return "Half Left";
 		default:
-			return "Unknown/Error";
+			return "Unknown";
 		}
 	}
 
@@ -53,11 +57,11 @@ public:
 
 	void test()
 	{
-		readDistanceForDirection(RIGHT);
+		rightDistance();
 		readDistanceForDirection(HALF_RIGHT);
-		readDistanceForDirection(FRONT);
+		frontDistance();
 		readDistanceForDirection(HALF_LEFT);
-		readDistanceForDirection(LEFT);
+		leftDistance();
 	}
 
 	int frontDistance()
@@ -65,14 +69,14 @@ public:
 		return readDistanceForDirection(FRONT);
 	}
 
-	int leftDistance()
-	{
-		return readDistanceForDirection(LEFT);
-	}
-
 	int rightDistance()
 	{
-		return readDistanceForDirection(RIGHT);
+		return readDistanceForDirection(config.SERVO_RIGHT);
+	}
+
+	int leftDistance()
+	{
+		return readDistanceForDirection(config.SERVO_LEFT);
 	}
 
 private:
@@ -95,6 +99,13 @@ private:
 			adjustedDirection = maxPos;
 		}
 		servo.write(adjustedDirection);
+
+#if DEBUG_THE_CAR
+		Serial.print("ORG direction: ");
+		Serial.print(direction);
+		Serial.print(" => ADJ direction: ");
+		Serial.println(adjustedDirection);
+#endif
 
 		if (_direction != adjustedDirection)
 		{

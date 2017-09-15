@@ -164,28 +164,32 @@ public:
 		Serial.println();
 	}
 
-	void testInfrared()
+	void testInfrared() // TODO test it
 	{
-		ElegooMoveCommand cmd = ElegooMoveCommand::UNKNOWN_CMD;
-		do
+		while (true)
 		{
-			cmd = infraredReceiver.readCommand();
-			//	const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd); // TODO make it work
-			//	Serial.println(cmdString);
-		} //
-		while (cmd != ElegooMoveCommand::STOP_MOVING);
+			ElegooMoveCommand cmd = infraredReceiver.readCommand();
+			const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			Serial.println(cmdString);
+			if (cmd == ElegooMoveCommand::STOP_MOVING)
+			{
+				return;
+			}
+		}
 	}
 
-	void testBluetooth()
+	void testBluetooth() // TODO test it
 	{
-		ElegooMoveCommand cmd = NULL;
-		do
+		while (true)
 		{
-			cmd = bluetoothReceiver.readCommand();
-			// const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd); // TODO make it work
-			// Serial.println(cmdString);
-		} //
-		while (cmd != ElegooMoveCommand::STOP_MOVING);
+			ElegooMoveCommand cmd = bluetoothReceiver.readCommand();
+			const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			Serial.println(cmdString);
+			if (cmd == ElegooMoveCommand::STOP_MOVING)
+			{
+				return;
+			}
+		}
 	}
 
 	void testMotorUnit()
