@@ -74,15 +74,20 @@ public:
 
 		const int rightDistance = distUnit.rightDistance();
 		const int leftDistance = distUnit.leftDistance();
+		distUnit.frontDistance(); // reposition sensor, to avoid delays
 
 		if ((rightDistance > safetyDistanceInCM) && (rightDistance >= leftDistance))
 		{
-			return motorUnit.turnRight();
+			motorUnit.turnRight();
+			motorUnit.stopMoving();
+			return STATUS_OK;
 		}
 
 		if ((leftDistance > safetyDistanceInCM) && leftDistance >= rightDistance)
 		{
-			return motorUnit.turnLeft();
+			motorUnit.turnLeft();
+			motorUnit.stopMoving();
+			return STATUS_OK;
 		}
 
 		return backOut();
@@ -148,18 +153,11 @@ private:
 	}
 
 public:
-	void testServo()
-	{
-		Serial.println("Test Servo");
-		// distUnit.testServo(); // TODO make it work
-		Serial.println();
-	}
 
 	void testDistanceUnit()
 	{
 		Serial.println("Test Distance Unit");
 		distUnit.frontDistance();
-		distUnit.test();
 		distUnit.test();
 		distUnit.frontDistance();
 		Serial.println();

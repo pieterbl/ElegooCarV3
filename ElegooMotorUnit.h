@@ -72,7 +72,7 @@ public:
 		digitalWrite(IN3, LOW);
 		digitalWrite(IN4, HIGH);
 		printLine("Turn Left");
-		delay(250);
+		delay(500);
 		return STATUS_OK;
 	}
 
@@ -84,7 +84,7 @@ public:
 		digitalWrite(IN3, HIGH);
 		digitalWrite(IN4, LOW);
 		printLine("Turn Right");
-		delay(250);
+		delay(500);
 		return STATUS_OK;
 	}
 
