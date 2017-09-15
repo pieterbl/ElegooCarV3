@@ -12,7 +12,7 @@ private:
 
 	Servo servo;
 
-	static const int RIGHT = 20; // TODO hard-coded (sometimes value 10 or 20 is better here)
+	static const int RIGHT = 0;
 	static const int HALF_RIGHT = 45;
 	static const int FRONT = 90;
 	static const int HALF_LEFT = 135;
@@ -51,16 +51,6 @@ public:
 		pinMode(config.TRIGGER_PIN, INPUT);
 	}
 
-	int getServoMinPos()
-	{
-		return min(config.SERVO_RIGHT, config.SERVO_LEFT);
-	}
-
-	int getServoMaxPos()
-	{
-		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
-	}
-
 	void test()
 	{
 		readDistanceForDirection(RIGHT);
@@ -85,25 +75,13 @@ public:
 		return readDistanceForDirection(RIGHT);
 	}
 
-	int readDistanceForDirection(const int direction)
-	{
-		setDirection(direction);
-		int distance = readDistance();
-
-		Serial.print("Direction ");
-		Serial.print(getDirectionString(direction));
-		Serial.print(" = ");
-		Serial.println(distance);
-
-		return distance;
-	}
-
 private:
 
 	int _direction = -1;
 
 	void setDirection(const int direction)
 	{
+		// direction parameter will be checked against what is defined as min/max in the config object
 		int minPos = getServoMinPos();
 		int maxPos = getServoMaxPos();
 
@@ -139,6 +117,30 @@ private:
 		fDistance = fDistance / 58;
 		return (int) fDistance;
 	}
+
+	int readDistanceForDirection(const int direction)
+	{
+		setDirection(direction);
+		int distance = readDistance();
+
+		Serial.print("Direction ");
+		Serial.print(getDirectionString(direction));
+		Serial.print(" = ");
+		Serial.println(distance);
+
+		return distance;
+	}
+
+	int getServoMinPos()
+	{
+		return min(config.SERVO_RIGHT, config.SERVO_LEFT);
+	}
+
+	int getServoMaxPos()
+	{
+		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
+	}
+
 };
 
 #endif

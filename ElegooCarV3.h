@@ -90,6 +90,7 @@ public:
 			return STATUS_OK;
 		}
 
+		// we're stuck
 		return backOut();
 	}
 
@@ -107,7 +108,7 @@ private:
 
 			doBackOut = (rightDistance <= safetyDistanceInCM) && (leftDistance <= safetyDistanceInCM);
 
-		} while (doBackOut); // TODO result of backout must be used ( if place at the left , we must turn left , etc. )
+		} while (doBackOut); // TODO result of backOut should be used ( if room at left or right, we should turn that way )
 		return STATUS_OK;
 	}
 

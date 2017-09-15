@@ -15,9 +15,9 @@ public:
 
 		int SERVO_PIN = 3;
 
-		int SERVO_RIGHT = 20; // taking 20 as default instead of 0, since sometimes the servo has issues with value 0
+		int SERVO_RIGHT = 20; // taking 20 as default instead of 0, since sometimes the servo seems to have issues with value 0
 
-		int SERVO_LEFT = 160; // taking 160 as default instead of 180, since sometimes the servo has issues with value 180
+		int SERVO_LEFT = 160; // taking 160 as default instead of 180, since sometimes the servo may have issues with value 180
 	};
 
 	class InfraredReceiverConfig

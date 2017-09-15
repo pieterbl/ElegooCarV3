@@ -10,7 +10,7 @@
 #define IN3 9
 #define IN4 11
 
-class ElegooMotorUnit
+class ElegooMotorUnit // TODO make more configurable
 {
 private:
 

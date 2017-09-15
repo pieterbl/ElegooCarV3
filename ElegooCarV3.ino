@@ -22,9 +22,9 @@ void setup() // TODO test the car
 	car->registerInfraredConfig(new ElegooInfraredConfig());
 	car->registerInfraredConfig(new PanasonicInfraredConfig());
 	car->registerBluetoothConfig(new MyBluetoothConfig());
-
-	// do some tests
 	car->testDistanceUnit();
+
+	// TODO more tests
 	//car->testInfrared();
 	//car->testBluetooth();
 	//car->testMotorUnit();
