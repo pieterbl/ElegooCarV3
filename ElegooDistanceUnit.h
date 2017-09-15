@@ -39,9 +39,8 @@ private:
 
 public:
 
-	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig):
-		config(pConfig),
-		servo()
+	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig) :
+			config(pConfig), servo()
 	{
 	}
 
@@ -51,6 +50,29 @@ public:
 		pinMode(config.ECHO_PIN, INPUT);
 		pinMode(config.TRIGGER_PIN, INPUT);
 	}
+
+	int getServoMinPos()
+	{
+		return min(config.SERVO_RIGHT, config.SERVO_LEFT);
+	}
+
+	int getServoMaxPos()
+	{
+		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
+	}
+
+	/* TODO delete ?
+	void testServo()
+	{
+		int minPos = getServoMinPos();
+		int maxPos = getServoMaxPos();
+		for (int pos = minPos; pos < maxPos; pos++)
+		{
+			setDirection(pos);
+			delay(10);
+		}
+	}
+	 */
 
 	void test()
 	{
@@ -89,18 +111,22 @@ public:
 		return distance;
 	}
 
+
 private:
 
 	void setDirection(const int direction)
 	{
+		int minPos = getServoMinPos();
+		int maxPos = getServoMaxPos();
+
 		int adjustedDirection = direction;
-		if (direction < 0) // TODO hard-coded (sometimes value 10 or 20 is better here)
+		if (direction < minPos)
 		{
-			adjustedDirection = 0; // TODO hard-coded (sometimes value 10 or 20 is better here)
+			adjustedDirection = minPos;
 		}
-		if (direction > 180)
+		if (direction > maxPos)
 		{
-			adjustedDirection = 180;
+			adjustedDirection = maxPos;
 		}
 		servo.write(adjustedDirection);
 

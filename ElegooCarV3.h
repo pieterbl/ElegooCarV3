@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "ElegooCarConfig.h"
 #include "ElegooDistanceUnit.h"
+#include "ElegooMotorUnit.h"
 #include "ElegooInfraredReceiver.h"
 #include "ElegooBluetoothReceiver.h"
 
@@ -17,59 +18,23 @@ private:
 
 	ElegooDistanceUnit distUnit;
 
+	ElegooMotorUnit motorUnit;
+
 	ElegooInfraredReceiver infraredReceiver;
 
 	ElegooBluetoothReceiver bluetoothReceiver;
 
 	int safetyDistanceInCM;
 
-	void printLine(const char * message)
-	{
-		Serial.println(message);
-	}
-
-	int moveForwards()
-	{
-		printLine("Move Forwards");
-		return STATUS_OK;
-	}
-
-	int moveBackwards()
-	{
-		printLine("Move Backwards");
-		delay(500);
-		return STATUS_OK;
-	}
-
-	int stopMoving()
-	{
-		printLine("Stop Moving");
-		delay(500);
-		return STATUS_OK;
-	}
-
-	int turnLeft()
-	{
-		printLine("Turn Left");
-		delay(500);
-		return STATUS_OK;
-	}
-
-	int turnRight()
-	{
-		printLine("Turn Right");
-		delay(500);
-		return STATUS_OK;
-	}
-
 public:
 
-	ElegooCarV3(ElegooCarConfig * pCarConfig):
-		carConfig(pCarConfig),
-		distUnit(carConfig->distanceUnitConfig),
-		infraredReceiver(carConfig->infraredReceiverConfig),
-		bluetoothReceiver(carConfig->bluetoothReceiverConfig),
-		safetyDistanceInCM(carConfig->SAFETY_DISTANCE_CM)
+	ElegooCarV3(ElegooCarConfig * pCarConfig) :
+			carConfig(pCarConfig), //
+			distUnit(carConfig->distanceUnitConfig), //
+			motorUnit(), //
+			infraredReceiver(carConfig->infraredReceiverConfig), //
+			bluetoothReceiver(carConfig->bluetoothReceiverConfig), //
+			safetyDistanceInCM(carConfig->SAFETY_DISTANCE_CM)
 	{
 	}
 
@@ -79,8 +44,6 @@ public:
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
 		distUnit.setup();
-		distUnit.test();
-		distUnit.test();
 		return STATUS_OK;
 	}
 
@@ -103,23 +66,23 @@ public:
 		const int frontDistance = distUnit.frontDistance();
 		if (frontDistance > safetyDistanceInCM)
 		{
-			return moveForwards();
+			return motorUnit.moveForwards();
 		}
 
 		// frontDistance <= safetyDistanceInCM !!
-		stopMoving();
+		motorUnit.stopMoving();
 
 		const int rightDistance = distUnit.rightDistance();
 		const int leftDistance = distUnit.leftDistance();
 
 		if ((rightDistance > safetyDistanceInCM) && (rightDistance >= leftDistance))
 		{
-			return turnRight();
+			return motorUnit.turnRight();
 		}
 
 		if ((leftDistance > safetyDistanceInCM) && leftDistance >= rightDistance)
 		{
-			return turnLeft();
+			return motorUnit.turnLeft();
 		}
 
 		return backOut();
@@ -132,14 +95,14 @@ private:
 		boolean doBackOut = true;
 		do
 		{
-			moveBackwards();
-			stopMoving();
+			motorUnit.moveBackwards();
+			motorUnit.stopMoving();
 			const int rightDistance = distUnit.rightDistance();
 			const int leftDistance = distUnit.leftDistance();
 
 			doBackOut = (rightDistance <= safetyDistanceInCM) && (leftDistance <= safetyDistanceInCM);
 
-		} while (doBackOut);
+		} while (doBackOut); // TODO result of backout must be used ( if place at the left , we must turn left , etc. )
 		return STATUS_OK;
 	}
 
@@ -167,22 +130,71 @@ private:
 		switch (cmd)
 		{
 		case ElegooMoveCommand::MOVE_FORWARDS:
-			return this->moveForwards();
+			return motorUnit.moveForwards();
 		case ElegooMoveCommand::TURN_RIGHT:
 		case ElegooMoveCommand::HALF_RIGHT: // TODO HALF_RIGHT still to be supported
-			return this->turnRight();
+			return motorUnit.turnRight();
 		case ElegooMoveCommand::TURN_LEFT:
 		case ElegooMoveCommand::HALF_LEFT: // TODO HALF_LEFT still to be supported
-			return this->turnLeft();
+			return motorUnit.turnLeft();
 		case ElegooMoveCommand::MOVE_BACKWARDS: // TODO initiate manual override, we get here due to remote-control button-press
-			return this->moveBackwards();
+			return motorUnit.moveBackwards();
 		case ElegooMoveCommand::STOP_MOVING: // TODO initiate manual override, we get here due to remote-control button-press
-			return this->stopMoving();
+			return motorUnit.stopMoving();
 		case ElegooMoveCommand::UNKNOWN_CMD:
 			return STATUS_OK;
 		}
 		return STATUS_OK;
 	}
+
+public:
+	void testServo()
+	{
+		Serial.println("Test Servo");
+		distUnit.testServo();
+		Serial.println();
+	}
+
+	void testDistanceUnit()
+	{
+		Serial.println("Test Distance Unit");
+		distUnit.test();
+		distUnit.test();
+		Serial.println();
+	}
+
+	void testInfrared()
+	{
+		ElegooMoveCommand cmd = ElegooMoveCommand::UNKNOWN_CMD;
+		do
+		{
+			cmd = infraredReceiver.readCommand();
+			//	const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			//	Serial.println(cmdString);
+		} //
+		while (cmd != ElegooMoveCommand::STOP_MOVING);
+	}
+
+	void testBluetooth()
+	{
+		ElegooMoveCommand cmd = NULL;
+		do
+		{
+			cmd = bluetoothReceiver.readCommand();
+			// const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			// Serial.println(cmdString);
+		} //
+		while (cmd != ElegooMoveCommand::STOP_MOVING);
+	}
+
+	void testMotorUnit()
+	{
+		motorUnit.moveForwards();
+		delay(500);
+		motorUnit.moveBackwards();
+		delay(500);
+	}
+
 };
 
 #endif
