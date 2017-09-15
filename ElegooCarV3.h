@@ -158,8 +158,10 @@ public:
 	void testDistanceUnit()
 	{
 		Serial.println("Test Distance Unit");
+		distUnit.frontDistance();
 		distUnit.test();
 		distUnit.test();
+		distUnit.frontDistance();
 		Serial.println();
 	}
 
@@ -190,9 +192,9 @@ public:
 	void testMotorUnit()
 	{
 		motorUnit.moveForwards();
-		delay(500);
 		motorUnit.moveBackwards();
-		delay(500);
+		motorUnit.turnLeft();
+		motorUnit.turnRight();
 	}
 
 };

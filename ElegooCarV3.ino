@@ -7,10 +7,10 @@
 
 ElegooCarV3 * car = NULL;
 
-void setup()
+void setup() // TODO test the car
 {
 	ElegooCarConfig * carConfig = new ElegooCarConfig();
-	carConfig->SAFETY_DISTANCE_CM = 30;
+	carConfig->SAFETY_DISTANCE_CM = 40;
 	carConfig->serialConfig.BAUD_RATE = 9600;
 	carConfig->distanceUnitConfig.SERVO_RIGHT = 0;
 	carConfig->distanceUnitConfig.SERVO_LEFT = 180;
@@ -25,7 +25,7 @@ void setup()
 
 	// do some tests
 	//car->testServo();
-	//car->testDistanceUnit();
+	car->testDistanceUnit();
 	//car->testInfrared();
 	//car->testBluetooth();
 	//car->testMotorUnit();
@@ -33,6 +33,5 @@ void setup()
 
 void loop()
 {
-	// car->testMotorUnit();
 	car->drive();
 }

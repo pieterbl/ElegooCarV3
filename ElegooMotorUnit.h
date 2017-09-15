@@ -10,13 +10,13 @@
 #define IN3 9
 #define IN4 11
 
-class ElegooMotorUnit // TODO Test the driving part
+class ElegooMotorUnit
 {
 private:
 
 	static const int STATUS_OK = 0;
 
-	int speed = 100;
+	int speed = 170;
 
 	void writeSpeedToBoard()
 	{
@@ -72,25 +72,25 @@ public:
 
 	int turnLeft()
 	{
-//		writeSpeedToBoard();
-//		digitalWrite(IN1, LOW);
-//		digitalWrite(IN2, HIGH);
-//		digitalWrite(IN3, LOW);
-//		digitalWrite(IN4, HIGH);
+		writeSpeedToBoard();
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
+		digitalWrite(IN3, LOW);
+		digitalWrite(IN4, HIGH);
 		printLine("Turn Left");
-		delay(500);
+		delay(1500);
 		return STATUS_OK;
 	}
 
 	int turnRight()
 	{
-//		writeSpeedToBoard();
-//		digitalWrite(IN1, HIGH);
-//		digitalWrite(IN2, LOW);
-//		digitalWrite(IN3, HIGH);
-//		digitalWrite(IN4, LOW);
+		writeSpeedToBoard();
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
+		digitalWrite(IN3, HIGH);
+		digitalWrite(IN4, LOW);
 		printLine("Turn Right");
-		delay(500);
+		delay(1500);
 		return STATUS_OK;
 	}
 

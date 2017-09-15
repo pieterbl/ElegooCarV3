@@ -40,7 +40,7 @@ public:
 		unsigned long BAUD_RATE = 9600;
 	};
 
-	int SAFETY_DISTANCE_CM = 20;
+	int SAFETY_DISTANCE_CM = 40;
 	DistanceUnitConfig distanceUnitConfig;
 	InfraredReceiverConfig infraredReceiverConfig;
 	BluetoothReceiverConfig bluetoothReceiverConfig;
