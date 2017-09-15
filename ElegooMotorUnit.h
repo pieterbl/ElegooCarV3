@@ -31,11 +31,6 @@ private:
 
 public:
 
-	void setSpeed(int pSpeed)
-	{
-		speed = pSpeed;
-	}
-
 	void setup()
 	{
 		pinMode(ENA, OUTPUT);
@@ -54,7 +49,6 @@ public:
 		digitalWrite(IN3, LOW);
 		digitalWrite(IN4, HIGH);
 		printLine("Move Forwards");
-		delay(500);
 		return STATUS_OK;
 	}
 
@@ -78,7 +72,7 @@ public:
 		digitalWrite(IN3, LOW);
 		digitalWrite(IN4, HIGH);
 		printLine("Turn Left");
-		delay(1500);
+		delay(250);
 		return STATUS_OK;
 	}
 
@@ -90,7 +84,7 @@ public:
 		digitalWrite(IN3, HIGH);
 		digitalWrite(IN4, LOW);
 		printLine("Turn Right");
-		delay(1500);
+		delay(250);
 		return STATUS_OK;
 	}
 

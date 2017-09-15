@@ -61,19 +61,6 @@ public:
 		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
 	}
 
-	/* TODO delete ?
-	void testServo()
-	{
-		int minPos = getServoMinPos();
-		int maxPos = getServoMaxPos();
-		for (int pos = minPos; pos < maxPos; pos++)
-		{
-			setDirection(pos);
-			delay(10);
-		}
-	}
-	 */
-
 	void test()
 	{
 		readDistanceForDirection(RIGHT);
@@ -111,8 +98,9 @@ public:
 		return distance;
 	}
 
-
 private:
+
+	int _direction = -1;
 
 	void setDirection(const int direction)
 	{
@@ -130,8 +118,12 @@ private:
 		}
 		servo.write(adjustedDirection);
 
-		const int delayInMS = 1500; // TODO optimize, if change in direction is small, 500 ms will also do
-		delay(delayInMS);
+		if (_direction != adjustedDirection)
+		{
+			const int delayInMS = 1500; // TODO optimize? if change in direction is small, 500 ms will also do
+			delay(delayInMS);
+		}
+		_direction = adjustedDirection;
 	}
 
 	// ultrasonic distance measurement function
