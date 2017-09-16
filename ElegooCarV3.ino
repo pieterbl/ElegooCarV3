@@ -9,7 +9,7 @@
 
 ElegooCarV3 * car = NULL;
 
-void setup() // TODO test the car
+void setup()
 {
 	ElegooCarConfig * carConfig = new ElegooCarConfig();
 	carConfig->SAFETY_DISTANCE_CM = 30;
@@ -27,7 +27,7 @@ void setup() // TODO test the car
 	car->registerBluetoothConfig(new MyBluetoothConfig());
 	car->testDistanceUnit();
 
-	// TODO more tests
+	// TODO add tests
 	//car->testInfrared();
 	//car->testBluetooth();
 }

@@ -40,9 +40,10 @@ public:
 	int setup()
 	{
 		Serial.begin(carConfig->serialConfig.BAUD_RATE);
+		distUnit.setup();
+		motorUnit.setup();
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
-		distUnit.setup();
 		return ElegooConstants::OK;
 	}
 

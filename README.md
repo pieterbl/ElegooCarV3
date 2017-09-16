@@ -26,6 +26,10 @@ Using following libraries:
 | IRremote - IRremote-2.2.3.zip | http://www.arduinolibraries.info/libraries/i-rremote |
 
 
+# Driving the Car
+
+This is how driving the car looks like https://github.com/pieterbl/ElegooCarV3/blob/master/ElegooCarV3.ino
+
 # Trouble Shooting
 
 ## avrdude: stk500_getsync() attempt 10 of 10: not in sync: resp=0x00
