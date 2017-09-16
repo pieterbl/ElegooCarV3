@@ -7,7 +7,7 @@ The idea of the project is to have an object-oriented approach to control the ca
 | :--- | :--- |
 | Bluetooth remote controlled | Implementation available |
 | Infrared remote controlled | Implementation available |
-| Manual mode, without obstacle avoidance | Simple implementation available. Only moves short a distance at a time
+| Manual mode, without obstacle avoidance | Simple implementation available. Only moves a short distance at a time
 | Automatic mode, with obstacle avoidance | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
 | Switching driving algorithm via remote control | Planned |
 | Line tracking support | Planned |
@@ -43,7 +43,7 @@ The bluetooth app must be configured in the following way:
 
 | Left Column | Middle Column | Right Column |
 | :--- | :--- | :--- |
-| Half Left (\)  | Forward (F) | Half Right (/) |
+| Half Left (\\)  | Forward (F) | Half Right (/) |
 | Left (L)  | Stop (S) | Right (R) |
 | _empty_ | Backward (B) | _empty_ |
 | _empty_  | _empty_  | _empty_  |
