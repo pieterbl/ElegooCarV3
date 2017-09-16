@@ -5,10 +5,12 @@ The idea of the project is to have an object-oriented approach to control the ca
 
 | Feature | Status |
 | :--- | :--- |
-| Obstacle avoidance | xxx |
-| Line tracking | xxx |
-| Infrared remote controlled | xxx |
-| Bluetooth remote controlled | xxx |
+| Bluetooth remote controlled | Implementation available |
+| Infrared remote controlled | Implementation available |
+| Manual mode, without obstacle avoidance | Simple implementation available. Only moves short a distance at a time
+| Automatic mode, with obstacle avoidance | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
+| Switching driving algorithm via remote control | Planned |
+| Line tracking support | Planned |
 
 ## IDE
 
