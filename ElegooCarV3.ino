@@ -34,6 +34,7 @@ void setup()
 
 void loop()
 {
+	// currently, only manualMode is activated (with infrared and bluetooth remote controls)
 	car->manualMode = true;
 	car->drive();
 }

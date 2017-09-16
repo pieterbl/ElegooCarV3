@@ -30,6 +30,24 @@ Using following libraries:
 
 This is how driving the car looks like https://github.com/pieterbl/ElegooCarV3/blob/master/ElegooCarV3.ino
 
+## Driving with Bluetooth
+
+The bluetooth app can be found at the below listed locations:
+
+| Provider | Location |
+| :--- | :--- |
+| Google, Andriod | https://play.google.com/store/apps/details?id=com.femtoapp.rootsence.bleutils |
+| Apple, iPhone | https://itunes.apple.com/gb/app/elegoo-ble-tool/id1195318538 |
+
+The bluetooth app must be configured in the following way:
+
+| Half Left (\)  | Forward (F) | Half Right (/) |
+| Left (L)  | Stop (S) | Right (R) |
+| _empty_ | Backward (B) | _empty_ |
+| _empty_  | _empty_  | _empty_  |
+
+
+
 # Trouble Shooting
 
 ## avrdude: stk500_getsync() attempt 10 of 10: not in sync: resp=0x00
