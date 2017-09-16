@@ -10,7 +10,12 @@ The idea of the project is to have an object-oriented approach to control the ca
 | Infrared remote controlled | xxx |
 | Bluetooth remote controlled | xxx |
 
+## IDE
+
 Developing using the Sloeber IDE (for Windows) "Download 64 bits Bundle" from http://eclipse.baeyens.it/stable.php?OS=Windows
+
+## Libraries
+
 Using following libraries:
 
 | Library | Location |
