@@ -20,6 +20,12 @@ public:
 		int SERVO_LEFT = 160; // taking 160 as default instead of 180, since sometimes the servo may have issues with value 180
 	};
 
+	class MotorUnitConfig
+	{
+	public:
+		int SPEED = 170;
+	};
+
 	class InfraredReceiverConfig
 	{
 	public:
@@ -42,6 +48,7 @@ public:
 
 	int SAFETY_DISTANCE_CM = 30;
 	DistanceUnitConfig distanceUnitConfig;
+	MotorUnitConfig motorUnitConfig;
 	InfraredReceiverConfig infraredReceiverConfig;
 	BluetoothReceiverConfig bluetoothReceiverConfig;
 	SerialConfig serialConfig;

@@ -16,6 +16,7 @@ void setup() // TODO test the car
 	carConfig->serialConfig.BAUD_RATE = 9600;
 	carConfig->distanceUnitConfig.SERVO_RIGHT = 20;
 	carConfig->distanceUnitConfig.SERVO_LEFT = 180;
+	carConfig->motorUnitConfig.SPEED = 170;
 	carConfig->infraredReceiverConfig.MAX_NUM_RECEIVERS = 4;
 	carConfig->bluetoothReceiverConfig.MAX_NUM_RECEIVERS = 4;
 

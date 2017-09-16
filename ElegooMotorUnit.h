@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "ElegooConstants.h"
+#include "ElegooCarConfig.h"
 
 #define ENA 5
 #define ENB 6
@@ -11,13 +12,18 @@
 #define IN3 9
 #define IN4 11
 
-class ElegooMotorUnit // TODO make more configurable
+class ElegooMotorUnit
 {
 private:
 
-	int speed = 170;
+	ElegooCarConfig::MotorUnitConfig & config;
 
 public:
+
+	ElegooMotorUnit(ElegooCarConfig::MotorUnitConfig & pMotorUnitConfig) :
+			config(pMotorUnitConfig)
+	{
+	}
 
 	void setup()
 	{
@@ -72,8 +78,8 @@ private:
 
 	void powerOnWheels()
 	{
-		analogWrite(ENA, speed);
-		analogWrite(ENB, speed);
+		analogWrite(ENA, config.SPEED);
+		analogWrite(ENB, config.SPEED);
 	}
 
 	void stopWheels()

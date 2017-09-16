@@ -30,7 +30,7 @@ public:
 	ElegooCarV3(ElegooCarConfig * pCarConfig) :
 			carConfig(pCarConfig), //
 			distUnit(carConfig->distanceUnitConfig), //
-			motorUnit(), //
+			motorUnit(carConfig->motorUnitConfig), //
 			infraredReceiver(carConfig->infraredReceiverConfig), //
 			bluetoothReceiver(carConfig->bluetoothReceiverConfig), //
 			safetyDistanceInCM(carConfig->SAFETY_DISTANCE_CM)
