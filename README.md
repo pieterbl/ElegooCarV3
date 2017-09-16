@@ -41,6 +41,7 @@ The bluetooth app can be found at the below listed locations:
 
 The bluetooth app must be configured in the following way:
 
+| Left Column | Middle Column | Right Column |
 | :--- | :--- | :--- |
 | Half Left (\)  | Forward (F) | Half Right (/) |
 | Left (L)  | Stop (S) | Right (R) |
