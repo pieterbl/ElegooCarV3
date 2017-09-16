@@ -7,7 +7,7 @@
 #include "PanasonicInfraredConfig.h"
 #include "MyBluetoothConfig.h"
 
-ElegooCarV3 * car = NULL;
+ElegooCarV3 * car = 0;
 
 void setup()
 {
@@ -22,6 +22,8 @@ void setup()
 
 	car = new ElegooCarV3(carConfig);
 	car->setup();
+	car->selectManualDriver();
+
 	car->registerInfraredConfig(new ElegooInfraredConfig());
 	car->registerInfraredConfig(new PanasonicInfraredConfig());
 	car->registerBluetoothConfig(new MyBluetoothConfig());
@@ -34,7 +36,5 @@ void setup()
 
 void loop()
 {
-	// currently, only manualMode is activated (with infrared and bluetooth remote controls)
-	car->manualMode = true;
 	car->drive();
 }

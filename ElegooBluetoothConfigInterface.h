@@ -15,7 +15,7 @@ public:
 	{
 		const char * supportedChars = this->getSupportedCharacters();
 		const char * charFound = strchr(supportedChars, charToCheck);
-		return (charFound != NULL);
+		return (charFound != 0);
 	}
 
 	virtual ~ElegooBluetoothConfigInterface()
