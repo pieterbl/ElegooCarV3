@@ -3,12 +3,28 @@
 
 enum ElegooMoveCommand
 {
-	UNKNOWN_CMD, MOVE_FORWARDS, TURN_RIGHT, HALF_RIGHT, TURN_LEFT, HALF_LEFT, MOVE_BACKWARDS, STOP_MOVING
+	MANUAL_DRIVER = 0, //
+	AUTO_DRIVER_1 = 1,
+	AUTO_DRIVER_2 = 2,
+	MOVE_FORWARDS,
+	MOVE_BACKWARDS,
+	STOP_MOVING,
+	TURN_RIGHT,
+	HALF_RIGHT,
+	TURN_LEFT,
+	HALF_LEFT,
+	UNKNOWN_CMD, // TODO rename into UNK_COMMAND
+	NO_COMMAND
 };
 
 class ElegooMoveCommandUtil
 {
 public:
+	static bool isValidCommand(ElegooMoveCommand moveCommand)
+	{
+		return (moveCommand != ElegooMoveCommand::UNKNOWN_CMD) && (moveCommand != ElegooMoveCommand::NO_COMMAND);
+	}
+
 	static const char* getMoveCommandString(ElegooMoveCommand moveCommand)
 	{
 		switch (moveCommand)
@@ -28,8 +44,11 @@ public:
 		case STOP_MOVING:
 			return "Stop Moving";
 		case UNKNOWN_CMD:
-		default:
 			return "Unknown Command";
+		case NO_COMMAND:
+			return "No Command";
+		default:
+			return "ERROR";
 		}
 	}
 

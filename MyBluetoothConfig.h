@@ -11,6 +11,7 @@ public:
 		return "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+/\\";
 	}
 
+	// May return UNKNOWN_CMD, will never return NO_COMMAND
 	virtual ElegooMoveCommand checkCommand(const char possibleCommandCode)
 	{
 		switch (possibleCommandCode)
@@ -29,6 +30,12 @@ public:
 			return ElegooMoveCommand::MOVE_BACKWARDS;
 		case 'S':
 			return ElegooMoveCommand::STOP_MOVING;
+		case 'M':
+			return ElegooMoveCommand::MANUAL_DRIVER;
+		case '1':
+			return ElegooMoveCommand::AUTO_DRIVER_1;
+		case '2':
+			return ElegooMoveCommand::AUTO_DRIVER_2;
 		default:
 			return ElegooMoveCommand::UNKNOWN_CMD;
 		}

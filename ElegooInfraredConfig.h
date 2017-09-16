@@ -7,6 +7,7 @@
 class ElegooInfraredConfig: public ElegooInfraredConfigInterface
 {
 public:
+	// May return UNKNOWN_CMD, will never return NO_COMMAND
 	virtual ElegooMoveCommand checkCommand(unsigned long possibleCommandCode)
 	{
 		switch (possibleCommandCode)
