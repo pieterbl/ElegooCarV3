@@ -35,14 +35,23 @@ public:
 		numBluetoothConfigs++;
 	}
 
+	// May also return UNKNOWN_CMD or NO_COMMAND
 	ElegooMoveCommand readCommand()
 	{
-		const char charInput = Serial.read();
+		int intInput = Serial.read();
+		if (intInput == -1)
+		{
+			return ElegooMoveCommand::NO_COMMAND;
+		}
+
+		char charInput = (char) intInput;
 		ElegooMoveCommand moveCommand = checkBluetoothProviders(charInput);
 		return moveCommand;
 	}
 
 private:
+
+	// May return UNKNOWN_CMD, will never return NO_COMMAND
 	ElegooMoveCommand checkBluetoothProviders(char charInput)
 	{
 		for (int i = 0; i < numBluetoothConfigs; i++)
@@ -57,7 +66,7 @@ private:
 			ElegooMoveCommand moveCommand = bluetoothConfig->checkCommand(charInput);
 			if (moveCommand != ElegooMoveCommand::UNKNOWN_CMD)
 			{
-				return moveCommand;
+				return moveCommand; // return as soon as we have found something known
 			}
 		}
 

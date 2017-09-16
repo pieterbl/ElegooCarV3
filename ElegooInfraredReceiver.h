@@ -12,7 +12,7 @@ class ElegooInfraredReceiver
 {
 private:
 
-	IRrecv * irrecv = NULL;
+	IRrecv * irrecv = 0;
 
 	ElegooCarConfig::InfraredReceiverConfig & config;
 
@@ -42,9 +42,10 @@ public:
 		numInfraredConfigs++;
 	}
 
+	// May also return UNKNOWN_CMD or NO_COMMAND
 	ElegooMoveCommand readCommand()
 	{
-		ElegooMoveCommand resultsCommand = ElegooMoveCommand::UNKNOWN_CMD;
+		ElegooMoveCommand resultsCommand = ElegooMoveCommand::NO_COMMAND;
 
 		decode_results results;
 		while (irrecv->decode(&results)) // read all infrared input which we have
@@ -57,8 +58,10 @@ public:
 			Serial.println(resultsValue);
 
 			ElegooMoveCommand moveCommand = checkInfraredProviders(resultsValue); // check for known code
-			if (resultsCommand == ElegooMoveCommand::UNKNOWN_CMD) // if no known code yet
+			if (!ElegooMoveCommandUtil::isValidCommand(resultsCommand)) // if the search result is still not valid
 			{
+				// we don't return yet, we continue to empty the currently pending queue of IR signals,
+				// the below assignment, is performed until we have found an 'isValidCommand'
 				resultsCommand = moveCommand;
 			}
 		}
@@ -68,6 +71,7 @@ public:
 
 private:
 
+	// May return UNKNOWN_CMD, will never return NO_COMMAND
 	ElegooMoveCommand checkInfraredProviders(unsigned long resultsValue)
 	{
 		for (int i = 0; i < numInfraredConfigs; i++)
