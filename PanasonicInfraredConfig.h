@@ -3,6 +3,7 @@
 
 #include "ElegooInfraredConfigInterface.h"
 
+// Supporting the infrared remote control of my old radio ;-)
 class PanasonicInfraredConfig: public ElegooInfraredConfigInterface
 {
 public:

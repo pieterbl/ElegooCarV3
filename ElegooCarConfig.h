@@ -29,7 +29,7 @@ public:
 	class InfraredReceiverConfig
 	{
 	public:
-		int RECEIVER_PIN = 12;
+		uint8_t RECEIVER_PIN = 12;
 
 		int MAX_NUM_RECEIVERS = 10;
 	};

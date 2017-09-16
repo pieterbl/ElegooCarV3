@@ -3,6 +3,7 @@
 
 #include "ElegooInfraredConfigInterface.h"
 
+// Supporting the infrared remote control shipped with the car
 class ElegooInfraredConfig: public ElegooInfraredConfigInterface
 {
 public:
