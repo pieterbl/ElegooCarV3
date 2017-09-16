@@ -12,6 +12,8 @@ The idea of the project is to have an object-oriented approach to control the ca
 | Switching driving algorithm via remote control | Planned |
 | Line tracking support | Planned |
 
+## The Car
+
 ![Image of the EleegoSmartRobotCarV3.0](https://github.com/pieterbl/ElegooCarV3/blob/master/resources/EleegoSmartRobotCarV3.0.png)
 
 ## IDE
