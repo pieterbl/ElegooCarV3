@@ -2,6 +2,7 @@
 #define __ELEGOO_CAR_V3_H__
 
 #include <Arduino.h>
+#include "ElegooConstants.h"
 #include "ElegooCarConfig.h"
 #include "ElegooDistanceUnit.h"
 #include "ElegooMotorUnit.h"
@@ -11,8 +12,6 @@
 class ElegooCarV3
 {
 private:
-
-	static const int STATUS_OK = 0;
 
 	ElegooCarConfig * carConfig;
 
@@ -44,7 +43,7 @@ public:
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
 		distUnit.setup();
-		return STATUS_OK;
+		return ElegooConstants::OK;
 	}
 
 	void registerInfraredConfig(ElegooInfraredConfigInterface * infraredConfig)
@@ -70,7 +69,7 @@ public:
 
 		if (manualMode == true) // TODO test manual mode
 		{
-			return STATUS_OK;
+			return ElegooConstants::OK;
 		}
 
 		const int frontDistance = distUnit.frontDistance();
@@ -90,14 +89,14 @@ public:
 		{
 			motorUnit.turnRight();
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 		}
 
 		if ((leftDistance > safetyDistanceInCM) && leftDistance >= rightDistance)
 		{
 			motorUnit.turnLeft();
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 		}
 
 		// we're stuck
@@ -119,7 +118,7 @@ private:
 			doBackOut = (rightDistance <= safetyDistanceInCM) && (leftDistance <= safetyDistanceInCM);
 
 		} while (doBackOut); // TODO result of backOut should be used ( if room at left or right, we should turn that way )
-		return STATUS_OK;
+		return ElegooConstants::OK;
 	}
 
 	ElegooMoveCommand readMoveCommand()
@@ -149,44 +148,42 @@ private:
 			motorUnit.moveForwards();
 			delay(1000);
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::MOVE_BACKWARDS:
 			motorUnit.moveBackwards();
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::HALF_RIGHT:
-			motorUnit.turnRight(); // once
+			motorUnit.turnRight(250); // MS
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::TURN_RIGHT:
-			motorUnit.turnRight(); // once
-			// motorUnit.turnRight(); // TODO twice
+			motorUnit.turnRight(500); // MS
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::HALF_LEFT:
-			motorUnit.turnLeft(); // once
+			motorUnit.turnLeft(250); // MS
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::TURN_LEFT:
-			motorUnit.turnLeft(); // once
-			// motorUnit.turnLeft(); // TODO twice
+			motorUnit.turnLeft(500); // MS
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::STOP_MOVING:
 			motorUnit.stopMoving();
-			return STATUS_OK;
+			return ElegooConstants::OK;
 
 		case ElegooMoveCommand::UNKNOWN_CMD:
-			return STATUS_OK;
+			return ElegooConstants::OK;
 		}
 
-		return STATUS_OK;
+		return ElegooConstants::OK;
 	}
 
 public:

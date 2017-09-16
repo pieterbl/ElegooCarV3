@@ -2,6 +2,7 @@
 #define __ELEGOO_MOTOR_UNIT_H__
 
 #include <Arduino.h>
+#include "ElegooConstants.h"
 
 #define ENA 5
 #define ENB 6
@@ -14,15 +15,7 @@ class ElegooMotorUnit // TODO make more configurable
 {
 private:
 
-	static const int STATUS_OK = 0;
-
 	int speed = 170;
-
-	void writeSpeedToBoard()
-	{
-		analogWrite(ENA, speed);
-		analogWrite(ENB, speed);
-	}
 
 public:
 
@@ -38,60 +31,65 @@ public:
 
 	int moveForwards()
 	{
-		writeSpeedToBoard();
-		digitalWrite(IN1, HIGH);
-		digitalWrite(IN2, LOW);
-		digitalWrite(IN3, LOW);
-		digitalWrite(IN4, HIGH);
+		moveWheels(HIGH, LOW, LOW, HIGH);
 		Serial.println("Move Forwards");
-		return STATUS_OK;
+		return ElegooConstants::OK;
 	}
 
-	int moveBackwards()
+	int moveBackwards(int delayMS = 500)
 	{
-		writeSpeedToBoard();
-		digitalWrite(IN1, LOW);
-		digitalWrite(IN2, HIGH);
-		digitalWrite(IN3, HIGH);
-		digitalWrite(IN4, LOW);
+		moveWheels(LOW, HIGH, HIGH, LOW);
 		Serial.println("Move Backwards");
-		delay(500);
-		return STATUS_OK;
+		delay(delayMS);
+		return ElegooConstants::OK;
 	}
 
-	int turnLeft()
+	int turnLeft(int delayMS = 500)
 	{
-		writeSpeedToBoard();
-		digitalWrite(IN1, LOW);
-		digitalWrite(IN2, HIGH);
-		digitalWrite(IN3, LOW);
-		digitalWrite(IN4, HIGH);
+		moveWheels(LOW, HIGH, LOW, HIGH);
 		Serial.println("Turn Left");
-		delay(500);
-		return STATUS_OK;
+		delay(delayMS);
+		return ElegooConstants::OK;
 	}
 
-	int turnRight()
+	int turnRight(int delayMS = 500)
 	{
-		writeSpeedToBoard();
-		digitalWrite(IN1, HIGH);
-		digitalWrite(IN2, LOW);
-		digitalWrite(IN3, HIGH);
-		digitalWrite(IN4, LOW);
+		moveWheels(HIGH, LOW, HIGH, LOW);
 		Serial.println("Turn Right");
-		delay(500);
-		return STATUS_OK;
+		delay(delayMS);
+		return ElegooConstants::OK;
 	}
 
-	int stopMoving()
+	int stopMoving(int delayMS = 250)
+	{
+		stopWheels();
+		Serial.println("Stop Moving");
+		delay(delayMS);
+		return ElegooConstants::OK;
+	}
+
+private:
+
+	void powerOnWheels()
+	{
+		analogWrite(ENA, speed);
+		analogWrite(ENB, speed);
+	}
+
+	void stopWheels()
 	{
 		digitalWrite(ENA, LOW);
 		digitalWrite(ENB, LOW);
-		Serial.println("Stop Moving");
-		delay(500);
-		return STATUS_OK;
 	}
 
+	void moveWheels(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
+	{
+		powerOnWheels();
+		digitalWrite(IN1, valIn1);
+		digitalWrite(IN2, valIn2);
+		digitalWrite(IN3, valIn3);
+		digitalWrite(IN4, valIn4);
+	}
 };
 
 #endif

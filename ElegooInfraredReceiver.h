@@ -42,26 +42,6 @@ public:
 		numInfraredConfigs++;
 	}
 
-	ElegooMoveCommand readCommandOld() // TODO delete
-	{
-		decode_results results;
-
-		if (!irrecv->decode(&results))
-		{
-			return ElegooMoveCommand::UNKNOWN_CMD;
-		}
-
-		unsigned long resultsValue = results.value;
-		irrecv->resume();
-		delay(150);
-
-		Serial.print("Infrared result: ");
-		Serial.println(resultsValue);
-
-		ElegooMoveCommand moveCommand = checkInfraredProviders(resultsValue);
-		return moveCommand;
-	}
-
 	ElegooMoveCommand readCommand()
 	{
 		ElegooMoveCommand resultsCommand = ElegooMoveCommand::UNKNOWN_CMD;
