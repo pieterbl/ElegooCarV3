@@ -12,6 +12,7 @@ The idea of the project is to have an object-oriented approach to control the ca
 
 Developing using the Sloeber IDE (for Windows) "Download 64 bits Bundle" from http://eclipse.baeyens.it/stable.php?OS=Windows
 Using following libraries:
+
 | Library | Location |
 | :--- | :--- |
 | Servo | Comes with the Sloeber IDE |
