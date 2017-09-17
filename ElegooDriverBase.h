@@ -3,8 +3,12 @@
 
 class ElegooDriverBase
 {
-private:
 public:
+	virtual ~ElegooDriverBase()
+	{
+	}
+
+	virtual int processCommand(ElegooMoveCommand command) = 0;
 };
 
 #endif

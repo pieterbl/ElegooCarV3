@@ -35,10 +35,11 @@ public:
 		pinMode(IN4, OUTPUT);
 	}
 
-	int moveForwards()
+	int moveForwards(int delayMS = 0)
 	{
 		moveWheels(HIGH, LOW, LOW, HIGH);
 		Serial.println("Move Forwards");
+		delay(delayMS);
 		return ElegooConstants::OK;
 	}
 

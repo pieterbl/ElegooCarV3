@@ -11,6 +11,15 @@ private:
 
 public:
 
+	virtual ~ElegooAutomaticDriver2()
+	{
+	}
+
+	virtual int processCommand(ElegooMoveCommand command)
+	{
+		return ElegooConstants::OK;
+	}
+
 private:
 };
 
