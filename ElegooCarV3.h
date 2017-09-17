@@ -8,6 +8,9 @@
 #include "ElegooMotorUnit.h"
 #include "ElegooInfraredReceiver.h"
 #include "ElegooBluetoothReceiver.h"
+#include "ElegooManualDriver.h"
+#include "ElegooAutomaticDriver1.h"
+#include "ElegooAutomaticDriver2.h"
 
 class ElegooCarV3
 {
@@ -22,6 +25,10 @@ private:
 	ElegooInfraredReceiver infraredReceiver;
 
 	ElegooBluetoothReceiver bluetoothReceiver;
+
+	ElegooDriverBase * drivers[3];
+
+	ElegooDriverBase * currentDriver = 0;
 
 	int safetyDistanceInCM;
 
@@ -44,7 +51,40 @@ public:
 		motorUnit.setup();
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
+
+		drivers[ElegooMoveCommand::MANUAL_DRIVER] = //
+				new ElegooManualDriver(motorUnit);
+		drivers[ElegooMoveCommand::AUTO_DRIVER_1] = //
+				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);
+		drivers[ElegooMoveCommand::AUTO_DRIVER_2] = //
+				new ElegooAutomaticDriver2(safetyDistanceInCM, distUnit, motorUnit);
+
+		selectManualDriver();
+
 		return ElegooConstants::OK;
+	}
+
+private:
+	int selectDriver(ElegooMoveCommand newDriver)
+	{
+		if (newDriver == ElegooMoveCommand::MANUAL_DRIVER || //
+				newDriver == ElegooMoveCommand::AUTO_DRIVER_1 || //
+				newDriver == ElegooMoveCommand::AUTO_DRIVER_2)
+		{
+			currentDriver = drivers[newDriver];
+		}
+		return ElegooConstants::OK;
+	}
+
+	bool usingManualDriver()
+	{
+		return (currentDriver == drivers[ElegooMoveCommand::MANUAL_DRIVER]);
+	}
+
+public:
+	void selectManualDriver()
+	{
+		selectDriver(ElegooMoveCommand::MANUAL_DRIVER);
 	}
 
 	void registerInfraredConfig(ElegooInfraredConfigInterface * infraredConfig)
@@ -57,134 +97,67 @@ public:
 		bluetoothReceiver.registerBluetoothConfig(bluetoothConfig);
 	}
 
-	bool manualMode = false;
-
 	int drive()
 	{
 		ElegooMoveCommand moveCmd = readMoveCommand();
-		if (moveCmd != ElegooMoveCommand::UNKNOWN_CMD)
+		if (moveCmd == ElegooMoveCommand::STOP_MOVING)
 		{
-			manualMode = true;
-			processMoveCommand(moveCmd);
+			return motorUnit.stopMoving();
 		}
 
-		if (manualMode == true) // TODO test manual mode
+		// TODO test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls
+		if (!usingManualDriver() && moveCmd != ElegooMoveCommand::NO_COMMAND)
 		{
-			return ElegooConstants::OK;
-		}
-
-		const int frontDistance = distUnit.frontDistance();
-		if (frontDistance > safetyDistanceInCM)
-		{
-			return motorUnit.moveForwards();
-		}
-
-		// frontDistance <= safetyDistanceInCM !!
-		motorUnit.stopMoving();
-
-		const int rightDistance = distUnit.rightDistance();
-		const int leftDistance = distUnit.leftDistance();
-		distUnit.frontDistance(); // reposition sensor, to avoid delays
-
-		if ((rightDistance > safetyDistanceInCM) && (rightDistance >= leftDistance))
-		{
-			motorUnit.turnRight();
 			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			selectManualDriver();
+			// continue processing the given command (button press) below
 		}
 
-		if ((leftDistance > safetyDistanceInCM) && leftDistance >= rightDistance)
+		if (usingManualDriver())
 		{
-			motorUnit.turnLeft();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-		}
+			switch (moveCmd)
+			{
+			case ElegooMoveCommand::MANUAL_DRIVER:
+			case ElegooMoveCommand::AUTO_DRIVER_1:
+			case ElegooMoveCommand::AUTO_DRIVER_2:
+				return selectDriver(moveCmd);
 
-		// we're stuck
-		return backOut();
+			case ElegooMoveCommand::UNKNOWN_CMD:
+			case ElegooMoveCommand::NO_COMMAND:
+				return ElegooConstants::OK;
+
+			default:
+				break;
+			}
+
+			return currentDriver->processCommand(moveCmd);
+		}
+		else
+		{
+			return currentDriver->processCommand(ElegooMoveCommand::NO_COMMAND);
+		}
 	}
 
 private:
 
-	int backOut()
-	{
-		boolean doBackOut = true;
-		do
-		{
-			motorUnit.moveBackwards();
-			motorUnit.stopMoving();
-			const int rightDistance = distUnit.rightDistance();
-			const int leftDistance = distUnit.leftDistance();
-
-			doBackOut = (rightDistance <= safetyDistanceInCM) && (leftDistance <= safetyDistanceInCM);
-
-		} while (doBackOut); // TODO result of backOut should be used ( if room at left or right, we should turn that way )
-		return ElegooConstants::OK;
-	}
-
+	// May also return UNKNOWN_CMD or NO_COMMAND
 	ElegooMoveCommand readMoveCommand()
 	{
-		ElegooMoveCommand cmd = NULL;
+		ElegooMoveCommand cmd = ElegooMoveCommand::NO_COMMAND;
 
 		cmd = infraredReceiver.readCommand();
-		if (cmd != ElegooMoveCommand::UNKNOWN_CMD)
+		if (ElegooMoveCommandUtil::isValidCommand(cmd))
 		{
 			return cmd;
 		}
 
 		cmd = bluetoothReceiver.readCommand();
-		if (cmd != ElegooMoveCommand::UNKNOWN_CMD)
+		if (ElegooMoveCommandUtil::isValidCommand(cmd))
 		{
 			return cmd;
 		}
 
-		return ElegooMoveCommand::UNKNOWN_CMD;
-	}
-
-	int processMoveCommand(const ElegooMoveCommand cmd)
-	{
-		switch (cmd)
-		{
-		case ElegooMoveCommand::MOVE_FORWARDS:
-			motorUnit.moveForwards();
-			delay(1000);
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::MOVE_BACKWARDS:
-			motorUnit.moveBackwards();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::HALF_RIGHT:
-			motorUnit.turnRight(250); // MS
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::TURN_RIGHT:
-			motorUnit.turnRight(500); // MS
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::HALF_LEFT:
-			motorUnit.turnLeft(250); // MS
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::TURN_LEFT:
-			motorUnit.turnLeft(500); // MS
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::STOP_MOVING:
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
-
-		case ElegooMoveCommand::UNKNOWN_CMD:
-			return ElegooConstants::OK;
-		}
-
-		return ElegooConstants::OK;
+		return cmd;
 	}
 
 public:
@@ -198,7 +171,7 @@ public:
 		Serial.println();
 	}
 
-	void testInfrared() // TODO test it
+	void testInfrared() // TODO make this work
 	{
 		while (true)
 		{
@@ -212,7 +185,7 @@ public:
 		}
 	}
 
-	void testBluetooth() // TODO test it
+	void testBluetooth() // TODO make this work
 	{
 		while (true)
 		{
