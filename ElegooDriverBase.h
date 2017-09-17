@@ -8,7 +8,7 @@ public:
 	{
 	}
 
-	virtual int processCommand(ElegooCommand command) = 0;
+	virtual int processCommand(ElegooCommand cmd) = 0;
 };
 
 #endif

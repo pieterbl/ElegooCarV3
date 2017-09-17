@@ -20,9 +20,9 @@ public:
 	{
 	}
 
-	virtual int processCommand(ElegooCommand command)
+	virtual int processCommand(ElegooCommand cmd)
 	{
-		switch (command)
+		switch (cmd)
 		{
 		case ElegooCommand::MOVE_FORWARDS:
 			motorUnit.moveForwards(1000);
