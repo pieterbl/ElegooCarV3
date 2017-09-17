@@ -14,7 +14,7 @@ private:
 	ElegooMotorUnit & motorUnit;
 
 public:
-	virtual ElegooAutomaticDriver1( //
+	ElegooAutomaticDriver1( //
 			int pSafetyDistanceInCM, ElegooDistanceUnit & pDistUnit, ElegooMotorUnit & pMotorUnit) :
 			safetyDistanceInCM(pSafetyDistanceInCM), distUnit(pDistUnit), motorUnit(pMotorUnit)
 	{

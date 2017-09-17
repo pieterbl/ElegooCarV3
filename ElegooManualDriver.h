@@ -11,7 +11,7 @@ private:
 	ElegooMotorUnit & motorUnit;
 
 public:
-	virtual ElegooManualDriver(ElegooMotorUnit & pMotorUnit) :
+	ElegooManualDriver(ElegooMotorUnit & pMotorUnit) :
 			motorUnit(pMotorUnit)
 	{
 	}
@@ -53,9 +53,10 @@ public:
 			motorUnit.turnLeft(500); // MS
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
-		}
 
-		return ElegooConstants::OK;
+		default:
+			return ElegooConstants::OK;
+		}
 	}
 };
 
