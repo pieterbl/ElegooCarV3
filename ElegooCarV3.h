@@ -52,11 +52,11 @@ public:
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
 
-		drivers[ElegooMoveCommand::MANUAL_DRIVER] = //
+		drivers[ElegooCommand::MANUAL_DRIVER] = //
 				new ElegooManualDriver(motorUnit);
-		drivers[ElegooMoveCommand::AUTO_DRIVER_1] = //
+		drivers[ElegooCommand::AUTO_DRIVER_1] = //
 				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);
-		drivers[ElegooMoveCommand::AUTO_DRIVER_2] = //
+		drivers[ElegooCommand::AUTO_DRIVER_2] = //
 				new ElegooAutomaticDriver2(safetyDistanceInCM, distUnit, motorUnit);
 
 		selectManualDriver();
@@ -65,11 +65,11 @@ public:
 	}
 
 private:
-	int selectDriver(ElegooMoveCommand newDriver)
+	int selectDriver(ElegooCommand newDriver)
 	{
-		if (newDriver == ElegooMoveCommand::MANUAL_DRIVER || //
-				newDriver == ElegooMoveCommand::AUTO_DRIVER_1 || //
-				newDriver == ElegooMoveCommand::AUTO_DRIVER_2)
+		if (newDriver == ElegooCommand::MANUAL_DRIVER || //
+				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
+				newDriver == ElegooCommand::AUTO_DRIVER_2)
 		{
 			currentDriver = drivers[newDriver];
 		}
@@ -78,13 +78,13 @@ private:
 
 	bool usingManualDriver()
 	{
-		return (currentDriver == drivers[ElegooMoveCommand::MANUAL_DRIVER]);
+		return (currentDriver == drivers[ElegooCommand::MANUAL_DRIVER]);
 	}
 
 public:
 	void selectManualDriver()
 	{
-		selectDriver(ElegooMoveCommand::MANUAL_DRIVER);
+		selectDriver(ElegooCommand::MANUAL_DRIVER);
 	}
 
 	void registerInfraredConfig(ElegooInfraredConfigInterface * infraredConfig)
@@ -99,14 +99,14 @@ public:
 
 	int drive()
 	{
-		ElegooMoveCommand moveCmd = readMoveCommand();
-		if (moveCmd == ElegooMoveCommand::STOP_MOVING)
+		ElegooCommand cmd = readCommand();
+		if (cmd == ElegooCommand::STOP_MOVING)
 		{
 			return motorUnit.stopMoving();
 		}
 
 		// TODO test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls
-		if (!usingManualDriver() && moveCmd != ElegooMoveCommand::NO_COMMAND)
+		if (!usingManualDriver() && cmd != ElegooCommand::NO_COMMAND)
 		{
 			motorUnit.stopMoving();
 			selectManualDriver();
@@ -115,44 +115,44 @@ public:
 
 		if (usingManualDriver())
 		{
-			switch (moveCmd)
+			switch (cmd)
 			{
-			case ElegooMoveCommand::MANUAL_DRIVER:
-			case ElegooMoveCommand::AUTO_DRIVER_1:
-			case ElegooMoveCommand::AUTO_DRIVER_2:
-				return selectDriver(moveCmd);
+			case ElegooCommand::MANUAL_DRIVER:
+			case ElegooCommand::AUTO_DRIVER_1:
+			case ElegooCommand::AUTO_DRIVER_2:
+				return selectDriver(cmd);
 
-			case ElegooMoveCommand::UNKNOWN_CMD:
-			case ElegooMoveCommand::NO_COMMAND:
+			case ElegooCommand::UNK_COMMAND:
+			case ElegooCommand::NO_COMMAND:
 				return ElegooConstants::OK;
 
 			default:
 				break;
 			}
 
-			return currentDriver->processCommand(moveCmd);
+			return currentDriver->processCommand(cmd);
 		}
 		else
 		{
-			return currentDriver->processCommand(ElegooMoveCommand::NO_COMMAND);
+			return currentDriver->processCommand(ElegooCommand::NO_COMMAND);
 		}
 	}
 
 private:
 
 	// May also return UNKNOWN_CMD or NO_COMMAND
-	ElegooMoveCommand readMoveCommand()
+	ElegooCommand readCommand()
 	{
-		ElegooMoveCommand cmd = ElegooMoveCommand::NO_COMMAND;
+		ElegooCommand cmd = ElegooCommand::NO_COMMAND;
 
 		cmd = infraredReceiver.readCommand();
-		if (ElegooMoveCommandUtil::isValidCommand(cmd))
+		if (ElegooCommandUtil::isValidCommand(cmd))
 		{
 			return cmd;
 		}
 
 		cmd = bluetoothReceiver.readCommand();
-		if (ElegooMoveCommandUtil::isValidCommand(cmd))
+		if (ElegooCommandUtil::isValidCommand(cmd))
 		{
 			return cmd;
 		}
@@ -175,10 +175,10 @@ public:
 	{
 		while (true)
 		{
-			ElegooMoveCommand cmd = infraredReceiver.readCommand();
-			const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			ElegooCommand cmd = infraredReceiver.readCommand();
+			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
 			Serial.println(cmdString);
-			if (cmd == ElegooMoveCommand::STOP_MOVING)
+			if (cmd == ElegooCommand::STOP_MOVING)
 			{
 				return;
 			}
@@ -189,10 +189,10 @@ public:
 	{
 		while (true)
 		{
-			ElegooMoveCommand cmd = bluetoothReceiver.readCommand();
-			const char * cmdString = ElegooMoveCommandUtil::getMoveCommandString(cmd);
+			ElegooCommand cmd = bluetoothReceiver.readCommand();
+			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
 			Serial.println(cmdString);
-			if (cmd == ElegooMoveCommand::STOP_MOVING)
+			if (cmd == ElegooCommand::STOP_MOVING)
 			{
 				return;
 			}

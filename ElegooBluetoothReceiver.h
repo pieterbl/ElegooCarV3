@@ -2,9 +2,9 @@
 #define __ELEGOO_BLUETOOTH_RECEIVER_H__
 
 #include <Arduino.h>
-#include "ElegooMoveCommand.h"
 #include "ElegooBluetoothConfigInterface.h"
 #include "ElegooCarConfig.h"
+#include "ElegooCommand.h"
 
 class ElegooBluetoothReceiver
 {
@@ -36,23 +36,23 @@ public:
 	}
 
 	// May also return UNKNOWN_CMD or NO_COMMAND
-	ElegooMoveCommand readCommand()
+	ElegooCommand readCommand()
 	{
 		int intInput = Serial.read();
 		if (intInput == -1)
 		{
-			return ElegooMoveCommand::NO_COMMAND;
+			return ElegooCommand::NO_COMMAND;
 		}
 
 		char charInput = (char) intInput;
-		ElegooMoveCommand moveCommand = checkBluetoothProviders(charInput);
-		return moveCommand;
+		ElegooCommand cmd = checkBluetoothProviders(charInput);
+		return cmd;
 	}
 
 private:
 
 	// May return UNKNOWN_CMD, will never return NO_COMMAND
-	ElegooMoveCommand checkBluetoothProviders(char charInput)
+	ElegooCommand checkBluetoothProviders(char charInput)
 	{
 		for (int i = 0; i < numBluetoothConfigs; i++)
 		{
@@ -63,14 +63,14 @@ private:
 				Serial.println(charInput);
 			}
 
-			ElegooMoveCommand moveCommand = bluetoothConfig->checkCommand(charInput);
-			if (moveCommand != ElegooMoveCommand::UNKNOWN_CMD)
+			ElegooCommand cmd = bluetoothConfig->checkCommand(charInput);
+			if (cmd != ElegooCommand::UNK_COMMAND)
 			{
-				return moveCommand; // return as soon as we have found something known
+				return cmd; // return as soon as we have found something known
 			}
 		}
 
-		return ElegooMoveCommand::UNKNOWN_CMD;
+		return ElegooCommand::UNK_COMMAND;
 	}
 };
 

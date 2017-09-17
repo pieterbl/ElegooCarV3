@@ -2,12 +2,13 @@
 #define __ELEGOO_BLUETOOTH_CONFIG_INTERFACE_H__
 
 #include <Arduino.h>
-#include "ElegooMoveCommand.h"
+
+#include "ElegooCommand.h"
 
 class ElegooBluetoothConfigInterface
 {
 public:
-	virtual ElegooMoveCommand checkCommand(const char possibleCommandCode) = 0;
+	virtual ElegooCommand checkCommand(const char possibleCommandCode) = 0;
 
 	virtual const char * getSupportedCharacters() = 0;
 

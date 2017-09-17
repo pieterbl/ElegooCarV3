@@ -1,7 +1,7 @@
-#ifndef __ELEGOO_MOVE_COMMAND_H__
-#define __ELEGOO_MOVE_COMMAND_H__
+#ifndef __ELEGOO_COMMAND_H__
+#define __ELEGOO_COMMAND_H__
 
-enum ElegooMoveCommand
+enum ElegooCommand
 {
 	MANUAL_DRIVER = 0, //
 	AUTO_DRIVER_1 = 1,
@@ -13,21 +13,21 @@ enum ElegooMoveCommand
 	HALF_RIGHT,
 	TURN_LEFT,
 	HALF_LEFT,
-	UNKNOWN_CMD, // TODO rename into UNK_COMMAND
+	UNK_COMMAND,
 	NO_COMMAND
 };
 
-class ElegooMoveCommandUtil
+class ElegooCommandUtil
 {
 public:
-	static bool isValidCommand(ElegooMoveCommand moveCommand)
+	static bool isValidCommand(ElegooCommand cmd)
 	{
-		return (moveCommand != ElegooMoveCommand::UNKNOWN_CMD) && (moveCommand != ElegooMoveCommand::NO_COMMAND);
+		return (cmd != ElegooCommand::UNK_COMMAND) && (cmd != ElegooCommand::NO_COMMAND);
 	}
 
-	static const char* getMoveCommandString(ElegooMoveCommand moveCommand)
+	static const char* getCommandString(ElegooCommand cmd)
 	{
-		switch (moveCommand)
+		switch (cmd)
 		{
 		case MOVE_FORWARDS:
 			return "Move Forwards";
@@ -43,7 +43,7 @@ public:
 			return "Move Backwards";
 		case STOP_MOVING:
 			return "Stop Moving";
-		case UNKNOWN_CMD:
+		case UNK_COMMAND:
 			return "Unknown Command";
 		case NO_COMMAND:
 			return "No Command";

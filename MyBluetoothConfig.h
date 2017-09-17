@@ -12,32 +12,32 @@ public:
 	}
 
 	// May return UNKNOWN_CMD, will never return NO_COMMAND
-	virtual ElegooMoveCommand checkCommand(const char possibleCommandCode)
+	virtual ElegooCommand checkCommand(const char possibleCommandCode)
 	{
 		switch (possibleCommandCode)
 		{
 		case 'F':
-			return ElegooMoveCommand::MOVE_FORWARDS;
+			return ElegooCommand::MOVE_FORWARDS;
 		case 'R':
-			return ElegooMoveCommand::TURN_RIGHT;
+			return ElegooCommand::TURN_RIGHT;
 		case '/':
-			return ElegooMoveCommand::HALF_RIGHT;
+			return ElegooCommand::HALF_RIGHT;
 		case 'L':
-			return ElegooMoveCommand::TURN_LEFT;
+			return ElegooCommand::TURN_LEFT;
 		case '\\':
-			return ElegooMoveCommand::HALF_LEFT;
+			return ElegooCommand::HALF_LEFT;
 		case 'B':
-			return ElegooMoveCommand::MOVE_BACKWARDS;
+			return ElegooCommand::MOVE_BACKWARDS;
 		case 'S':
-			return ElegooMoveCommand::STOP_MOVING;
+			return ElegooCommand::STOP_MOVING;
 		case 'M':
-			return ElegooMoveCommand::MANUAL_DRIVER;
+			return ElegooCommand::MANUAL_DRIVER;
 		case '1':
-			return ElegooMoveCommand::AUTO_DRIVER_1;
+			return ElegooCommand::AUTO_DRIVER_1;
 		case '2':
-			return ElegooMoveCommand::AUTO_DRIVER_2;
+			return ElegooCommand::AUTO_DRIVER_2;
 		default:
-			return ElegooMoveCommand::UNKNOWN_CMD;
+			return ElegooCommand::UNK_COMMAND;
 		}
 	}
 

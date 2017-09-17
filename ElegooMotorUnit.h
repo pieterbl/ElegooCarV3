@@ -46,7 +46,7 @@ public:
 	int moveBackwards(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, HIGH, LOW);
-		Serial.println("Move Backwards");
+		Serial.println("Move Backwards"); // TODO get rid of redundant string ??
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}

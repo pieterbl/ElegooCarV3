@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	virtual int processCommand(ElegooMoveCommand command)
+	virtual int processCommand(ElegooCommand command)
 	{
 		return ElegooConstants::OK;
 	}

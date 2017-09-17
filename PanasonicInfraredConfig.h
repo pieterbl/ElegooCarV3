@@ -8,22 +8,22 @@ class PanasonicInfraredConfig: public ElegooInfraredConfigInterface
 {
 public:
 	// May return UNKNOWN_CMD, will never return NO_COMMAND
-	virtual ElegooMoveCommand checkCommand(unsigned long possibleCommandCode)
+	virtual ElegooCommand checkCommand(unsigned long possibleCommandCode)
 	{
 		switch (possibleCommandCode)
 		{
 		case 3810251948:
-			return ElegooMoveCommand::MOVE_FORWARDS;
+			return ElegooCommand::MOVE_FORWARDS;
 		case 4025005874:
-			return ElegooMoveCommand::TURN_RIGHT;
+			return ElegooCommand::TURN_RIGHT;
 		case 3039307748:
-			return ElegooMoveCommand::TURN_LEFT;
+			return ElegooCommand::TURN_LEFT;
 		case 2830352306:
-			return ElegooMoveCommand::MOVE_BACKWARDS;
+			return ElegooCommand::MOVE_BACKWARDS;
 		case 3416630992:
-			return ElegooMoveCommand::STOP_MOVING;
+			return ElegooCommand::STOP_MOVING;
 		default:
-			return ElegooMoveCommand::UNKNOWN_CMD;
+			return ElegooCommand::UNK_COMMAND;
 		}
 	}
 

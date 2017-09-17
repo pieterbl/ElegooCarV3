@@ -20,36 +20,36 @@ public:
 	{
 	}
 
-	virtual int processCommand(ElegooMoveCommand command)
+	virtual int processCommand(ElegooCommand command)
 	{
 		switch (command)
 		{
-		case ElegooMoveCommand::MOVE_FORWARDS:
+		case ElegooCommand::MOVE_FORWARDS:
 			motorUnit.moveForwards(1000);
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
-		case ElegooMoveCommand::MOVE_BACKWARDS:
+		case ElegooCommand::MOVE_BACKWARDS:
 			motorUnit.moveBackwards();
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
-		case ElegooMoveCommand::HALF_RIGHT:
+		case ElegooCommand::HALF_RIGHT:
 			motorUnit.turnRight(250); // MS
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
-		case ElegooMoveCommand::TURN_RIGHT:
+		case ElegooCommand::TURN_RIGHT:
 			motorUnit.turnRight(500); // MS
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
-		case ElegooMoveCommand::HALF_LEFT:
+		case ElegooCommand::HALF_LEFT:
 			motorUnit.turnLeft(250); // MS
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
-		case ElegooMoveCommand::TURN_LEFT:
+		case ElegooCommand::TURN_LEFT:
 			motorUnit.turnLeft(500); // MS
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
