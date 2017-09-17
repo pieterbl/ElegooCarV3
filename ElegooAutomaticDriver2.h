@@ -3,13 +3,22 @@
 
 #include "ElegooConstants.h"
 #include "ElegooDriverBase.h"
+#include "ElegooDistanceUnit.h"
+#include "ElegooMotorUnit.h"
 
 class ElegooAutomaticDriver2: public ElegooDriverBase
 {
 private:
-	ElegooCarV3 & car;
+	int safetyDistanceInCM;
+	ElegooDistanceUnit & distUnit;
+	ElegooMotorUnit & motorUnit;
 
 public:
+	virtual ElegooAutomaticDriver2( //
+			int pSafetyDistanceInCM, ElegooDistanceUnit & pDistUnit, ElegooMotorUnit & pMotorUnit) :
+			safetyDistanceInCM(pSafetyDistanceInCM), distUnit(pDistUnit), motorUnit(pMotorUnit)
+	{
+	}
 
 	virtual ~ElegooAutomaticDriver2()
 	{

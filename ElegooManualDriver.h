@@ -3,6 +3,7 @@
 
 #include "ElegooConstants.h"
 #include "ElegooDriverBase.h"
+#include "ElegooMotorUnit.h"
 
 class ElegooManualDriver: public ElegooDriverBase
 {
