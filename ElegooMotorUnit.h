@@ -2,6 +2,7 @@
 #define __ELEGOO_MOTOR_UNIT_H__
 
 #include <Arduino.h>
+#include "ElegooCommand.h"
 #include "ElegooConstants.h"
 #include "ElegooCarConfig.h"
 
@@ -38,7 +39,7 @@ public:
 	int moveForwards(int delayMS = 0)
 	{
 		moveWheels(HIGH, LOW, LOW, HIGH);
-		Serial.println("Move Forwards");
+		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::MOVE_FORWARDS));
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -46,7 +47,7 @@ public:
 	int moveBackwards(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, HIGH, LOW);
-		Serial.println("Move Backwards"); // TODO get rid of redundant string ??
+		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::MOVE_BACKWARDS));
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -54,7 +55,7 @@ public:
 	int turnLeft(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, LOW, HIGH);
-		Serial.println("Turn Left");
+		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::TURN_LEFT));
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -62,7 +63,7 @@ public:
 	int turnRight(int delayMS = 500)
 	{
 		moveWheels(HIGH, LOW, HIGH, LOW);
-		Serial.println("Turn Right");
+		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::TURN_RIGHT));
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -70,7 +71,7 @@ public:
 	int stopMoving(int delayMS = 250)
 	{
 		stopWheels();
-		Serial.println("Stop Moving");
+		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::STOP_MOVING));
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
