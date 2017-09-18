@@ -59,20 +59,33 @@ public:
 
 private:
 
+	// TODO the backOut routine cannot be interrupted by a button press or so, this must be fixed (note: this routine is very unlikely to get called)
 	int backOut()
 	{
 		bool doBackOut = true;
+		int rightDistance = 0;
+		int leftDistance = 0;
+
 		do
 		{
 			motorUnit.moveBackwards();
 			motorUnit.stopMoving();
-			const int rightDistance = distUnit.rightDistance();
-			const int leftDistance = distUnit.leftDistance();
+			rightDistance = distUnit.rightDistance();
+			leftDistance = distUnit.leftDistance();
 
 			doBackOut = (rightDistance <= safetyDistanceInCM) && (leftDistance <= safetyDistanceInCM);
 
-		} while (doBackOut); // TODO result of backOut should be used ( if room at left or right, we should turn that way )
-		return ElegooConstants::OK;
+		} while (doBackOut);
+
+		// here either (rightDistance > safetyDistanceInCM) || (leftDistance > safetyDistanceInCM)
+		if (rightDistance > safetyDistanceInCM)
+		{
+			return motorUnit.turnRight();
+		}
+		else
+		{
+			return motorUnit.turnLeft();
+		}
 	}
 };
 

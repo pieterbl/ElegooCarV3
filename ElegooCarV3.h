@@ -52,24 +52,35 @@ public:
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
 
-		drivers[ElegooCommand::MANUAL_DRIVER] = //
-				new ElegooManualDriver(motorUnit);
-		drivers[ElegooCommand::AUTO_DRIVER_1] = //
-				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);
-		drivers[ElegooCommand::AUTO_DRIVER_2] = //
-				new ElegooAutomaticDriver2(safetyDistanceInCM, distUnit, motorUnit);
-
+		initializeDrivers();
 		selectManualDriver();
 
 		return ElegooConstants::OK;
 	}
 
 private:
+	void initializeDrivers()
+	{
+		drivers[ElegooCommand::MANUAL_DRIVER] = //
+				new ElegooManualDriver(motorUnit);
+
+		drivers[ElegooCommand::AUTO_DRIVER_1] = //
+				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);
+
+		drivers[ElegooCommand::AUTO_DRIVER_2] = //
+				new ElegooAutomaticDriver2(safetyDistanceInCM, distUnit, motorUnit);
+	}
+
+	bool isDriver(ElegooCommand newDriver)
+	{
+		return (newDriver == ElegooCommand::MANUAL_DRIVER || //
+				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
+				newDriver == ElegooCommand::AUTO_DRIVER_2);
+	}
+
 	int selectDriver(ElegooCommand newDriver)
 	{
-		if (newDriver == ElegooCommand::MANUAL_DRIVER || //
-				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
-				newDriver == ElegooCommand::AUTO_DRIVER_2)
+		if (isDriver(newDriver))
 		{
 			currentDriver = drivers[newDriver];
 		}
@@ -127,10 +138,8 @@ public:
 				return ElegooConstants::OK;
 
 			default:
-				break;
+				return currentDriver->processCommand(cmd);
 			}
-
-			return currentDriver->processCommand(cmd);
 		}
 		else
 		{
