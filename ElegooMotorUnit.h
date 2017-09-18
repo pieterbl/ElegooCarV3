@@ -60,12 +60,22 @@ public:
 		return ElegooConstants::OK;
 	}
 
+	int turnHalfLeft(int delayMS = 250)
+	{
+		return turnLeft(delayMS);
+	}
+
 	int turnRight(int delayMS = 500)
 	{
 		moveWheels(HIGH, LOW, HIGH, LOW);
 		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::TURN_RIGHT));
 		delay(delayMS);
 		return ElegooConstants::OK;
+	}
+
+	int turnHalfRight(int delayMS = 250)
+	{
+		return turnRight(delayMS);
 	}
 
 	int stopMoving(int delayMS = 250)

@@ -63,7 +63,7 @@ private:
 	void initializeDrivers()
 	{
 		drivers[ElegooCommand::MANUAL_DRIVER] = //
-				new ElegooManualDriver(motorUnit);
+				new ElegooManualDriver(safetyDistanceInCM, distUnit, motorUnit);
 
 		drivers[ElegooCommand::AUTO_DRIVER_1] = //
 				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);

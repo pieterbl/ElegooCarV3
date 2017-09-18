@@ -1,18 +1,13 @@
 #ifndef __ELEGOO_MANUAL_DRIVER_H__
 #define __ELEGOO_MANUAL_DRIVER_H__
 
-#include "ElegooConstants.h"
 #include "ElegooDriverBase.h"
-#include "ElegooMotorUnit.h"
 
 class ElegooManualDriver: public ElegooDriverBase
 {
-private:
-	ElegooMotorUnit & motorUnit;
-
 public:
-	ElegooManualDriver(ElegooMotorUnit & pMotorUnit) :
-			motorUnit(pMotorUnit)
+	ElegooManualDriver(int pSafetyDistanceInCM, ElegooDistanceUnit & pDistUnit, ElegooMotorUnit & pMotorUnit) :
+			ElegooDriverBase(pSafetyDistanceInCM, pDistUnit, pMotorUnit)
 	{
 	}
 
@@ -35,22 +30,22 @@ public:
 			return ElegooConstants::OK;
 
 		case ElegooCommand::HALF_RIGHT:
-			motorUnit.turnRight(250); // MS
+			motorUnit.turnHalfRight();
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
 		case ElegooCommand::TURN_RIGHT:
-			motorUnit.turnRight(500); // MS
+			motorUnit.turnRight();
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
 		case ElegooCommand::HALF_LEFT:
-			motorUnit.turnLeft(250); // MS
+			motorUnit.turnHalfLeft();
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
 		case ElegooCommand::TURN_LEFT:
-			motorUnit.turnLeft(500); // MS
+			motorUnit.turnLeft();
 			motorUnit.stopMoving();
 			return ElegooConstants::OK;
 
