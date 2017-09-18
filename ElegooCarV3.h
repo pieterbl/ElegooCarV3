@@ -12,6 +12,7 @@
 #include "ElegooAutomaticDriver1.h"
 #include "ElegooAutomaticDriver2.h"
 
+// TODO Check on new vs. delete (memory leaks?)
 class ElegooCarV3
 {
 private:

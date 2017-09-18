@@ -1,7 +1,7 @@
 #ifndef __ELEGOO_COMMAND_H__
 #define __ELEGOO_COMMAND_H__
 
-enum ElegooCommand
+enum ElegooCommand // TODO Add line-tracking driver option
 {
 	MANUAL_DRIVER = 0, //
 	AUTO_DRIVER_1 = 1,

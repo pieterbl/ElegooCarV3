@@ -6,6 +6,7 @@
 #include "ElegooDistanceUnit.h"
 #include "ElegooMotorUnit.h"
 
+// TODO Implement a better driving algorithm in: ElegooAutomaticDriver2
 class ElegooAutomaticDriver2: public ElegooDriverBase
 {
 private:
