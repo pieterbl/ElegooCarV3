@@ -29,7 +29,7 @@ void setup()
 	car->registerBluetoothConfig(new MyBluetoothConfig());
 	car->testDistanceUnit();
 
-	// TODO activate tests
+	// TODO (LOW) activate tests
 	//car->testInfrared();
 	//car->testBluetooth();
 }

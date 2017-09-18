@@ -180,7 +180,7 @@ public:
 		Serial.println();
 	}
 
-	void testInfrared() // TODO make this work
+	void testInfrared() // TODO (LOW) make this work
 	{
 		while (true)
 		{
@@ -194,7 +194,7 @@ public:
 		}
 	}
 
-	void testBluetooth() // TODO make this work
+	void testBluetooth() // TODO (LOW) make this work
 	{
 		while (true)
 		{

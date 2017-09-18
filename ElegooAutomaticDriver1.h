@@ -59,7 +59,7 @@ public:
 
 private:
 
-	// TODO the backOut routine cannot be interrupted by a button press or so, this must be fixed (note: this routine is very unlikely to get called)
+	// TODO (LOW) the backOut routine cannot be interrupted by a button press or so, this must be fixed (note: this routine is very unlikely to get called)
 	int backOut()
 	{
 		bool doBackOut = true;
