@@ -26,11 +26,18 @@ public:
 		}
 
 		int milliSeconds = biggestDistance.distance * 10;
-		return motorUnit.moveForwards(milliSeconds);
+		if (milliSeconds > 3000)
+		{
+			milliSeconds = 3000;
+		}
+
+		motorUnit.moveForwards(milliSeconds);
+		motorUnit.stopMoving();
+		return ElegooConstants::OK;
 	}
 
 private:
-	int adjustPositionForDirection(int direction)
+	int adjustPositionForDirection(int direction) // TODO MotorUnit operations to return reference to MotorUnit
 	{
 		if (direction == ElegooDistanceUnit::HALF_LEFT)
 		{

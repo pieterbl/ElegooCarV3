@@ -7,9 +7,10 @@ The idea of the project is to have an object-oriented approach to control the ca
 | :--- | :--- |
 | Bluetooth remote controlled | Implementation available |
 | Infrared remote controlled | Implementation available |
+| Switching driving algorithm via remote control | Implementation available |
 | Manual mode, without obstacle avoidance | Simple implementation available. Only moves a short distance at a time
-| Automatic mode, with obstacle avoidance | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
-| Switching driving algorithm via remote control | Planned |
+| Automatic mode one (Auto-1), continuous driving with obstacle avoidance | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
+| Automatic mode two (Auto-2), interrupted driving with rescan of environment | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
 | Line tracking support | Planned |
 
 ## The Car
@@ -49,8 +50,8 @@ The bluetooth app must be configured in the following way:
 | :--- | :--- | :--- |
 | Half Left (\\)  | Forward (F) | Half Right (/) |
 | Left (L)  | Stop (S) | Right (R) |
-| _empty_ | Backward (B) | _empty_ |
-| _empty_  | _empty_  | _empty_  |
+| Manual (M) | Backward (B) | _empty_ |
+| Auto-1 (1)  | Auto-2 (2)  | _empty_  |
 
 
 

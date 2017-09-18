@@ -94,9 +94,9 @@ private:
 	}
 
 public:
-	void selectManualDriver()
+	int selectManualDriver()
 	{
-		selectDriver(ElegooCommand::MANUAL_DRIVER);
+		return selectDriver(ElegooCommand::MANUAL_DRIVER);
 	}
 
 	void registerInfraredConfig(ElegooInfraredConfigInterface * infraredConfig)
@@ -114,7 +114,9 @@ public:
 		ElegooCommand cmd = readCommand();
 		if (cmd == ElegooCommand::STOP_MOVING)
 		{
-			return motorUnit.stopMoving();
+			motorUnit.stopMoving();
+			selectManualDriver();
+			return ElegooConstants::OK;
 		}
 
 		// TODO test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls

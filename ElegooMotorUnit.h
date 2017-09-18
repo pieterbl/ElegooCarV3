@@ -39,7 +39,7 @@ public:
 	int moveForwards(int delayMS = 0)
 	{
 		moveWheels(HIGH, LOW, LOW, HIGH);
-		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::MOVE_FORWARDS));
+		printMovement(delayMS, ElegooCommand::MOVE_FORWARDS);
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -47,7 +47,7 @@ public:
 	int moveBackwards(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, HIGH, LOW);
-		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::MOVE_BACKWARDS));
+		printMovement(delayMS, ElegooCommand::MOVE_BACKWARDS);
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -55,7 +55,7 @@ public:
 	int turnLeft(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, LOW, HIGH);
-		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::TURN_LEFT));
+		printMovement(delayMS, ElegooCommand::TURN_LEFT);
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -68,7 +68,7 @@ public:
 	int turnRight(int delayMS = 500)
 	{
 		moveWheels(HIGH, LOW, HIGH, LOW);
-		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::TURN_RIGHT));
+		printMovement(delayMS, ElegooCommand::TURN_RIGHT);
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -81,7 +81,7 @@ public:
 	int stopMoving(int delayMS = 250)
 	{
 		stopWheels();
-		Serial.println(ElegooCommandUtil::getCommandString(ElegooCommand::STOP_MOVING));
+		printMovement(delayMS, ElegooCommand::STOP_MOVING);
 		delay(delayMS);
 		return ElegooConstants::OK;
 	}
@@ -107,6 +107,15 @@ private:
 		digitalWrite(IN2, valIn2);
 		digitalWrite(IN3, valIn3);
 		digitalWrite(IN4, valIn4);
+	}
+
+	void printMovement(int delayMs, ElegooCommand cmd)
+	{
+		Serial.print(ElegooCommandUtil::getCommandString(cmd));
+		Serial.print(": ");
+		Serial.print(delayMs);
+		Serial.println(" MS");
+
 	}
 };
 
