@@ -22,7 +22,7 @@ public:
 
 		if (biggestDistance.distance < safetyDistanceInCM)
 		{
-			return backOut();
+			return backOut().statusOK();
 		}
 
 		int milliSeconds = biggestDistance.distance * 10;
@@ -31,13 +31,11 @@ public:
 			milliSeconds = 3000;
 		}
 
-		motorUnit.moveForwards(milliSeconds);
-		motorUnit.stopMoving();
-		return ElegooConstants::OK;
+		return motorUnit.moveForwards(milliSeconds).stopMoving().statusOK();
 	}
 
 private:
-	int adjustPositionForDirection(int direction) // TODO MotorUnit operations to return reference to MotorUnit
+	ElegooMotorUnit & adjustPositionForDirection(int direction)
 	{
 		if (direction == ElegooDistanceUnit::HALF_LEFT)
 		{
@@ -55,7 +53,7 @@ private:
 		{
 			return motorUnit.turnRight();
 		}
-		return ElegooConstants::OK;
+		return motorUnit;
 	}
 };
 

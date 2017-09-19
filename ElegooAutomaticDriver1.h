@@ -20,7 +20,7 @@ public:
 		const int frontDistance = distUnit.frontDistance();
 		if (frontDistance > safetyDistanceInCM)
 		{
-			return motorUnit.moveForwards();
+			return motorUnit.moveForwards().statusOK();
 		}
 
 		// frontDistance <= safetyDistanceInCM !!
@@ -32,20 +32,16 @@ public:
 
 		if ((rightDistance > safetyDistanceInCM) && (rightDistance >= leftDistance))
 		{
-			motorUnit.turnRight();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnRight().stopMoving().statusOK();
 		}
 
 		if ((leftDistance > safetyDistanceInCM) && leftDistance >= rightDistance)
 		{
-			motorUnit.turnLeft();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnLeft().stopMoving().statusOK();
 		}
 
 		// we're stuck
-		return backOut();
+		return backOut().statusOK();
 	}
 
 };

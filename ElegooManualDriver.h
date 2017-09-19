@@ -20,37 +20,25 @@ public:
 		switch (cmd)
 		{
 		case ElegooCommand::MOVE_FORWARDS:
-			motorUnit.moveForwards(1000);
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.moveForwards(1000).stopMoving().statusOK();
 
 		case ElegooCommand::MOVE_BACKWARDS:
-			motorUnit.moveBackwards();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.moveBackwards().stopMoving().statusOK();
 
 		case ElegooCommand::HALF_RIGHT:
-			motorUnit.turnHalfRight();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnHalfRight().stopMoving().statusOK();
 
 		case ElegooCommand::TURN_RIGHT:
-			motorUnit.turnRight();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnRight().stopMoving().statusOK();
 
 		case ElegooCommand::HALF_LEFT:
-			motorUnit.turnHalfLeft();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnHalfLeft().stopMoving().statusOK();
 
 		case ElegooCommand::TURN_LEFT:
-			motorUnit.turnLeft();
-			motorUnit.stopMoving();
-			return ElegooConstants::OK;
+			return motorUnit.turnLeft().stopMoving().statusOK();
 
 		default:
-			return ElegooConstants::OK;
+			return motorUnit.statusOK();
 		}
 	}
 };

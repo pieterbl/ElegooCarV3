@@ -2,8 +2,8 @@
 #define __ELEGOO_MOTOR_UNIT_H__
 
 #include <Arduino.h>
+#include "ElegooBase.h"
 #include "ElegooCommand.h"
-#include "ElegooConstants.h"
 #include "ElegooCarConfig.h"
 
 #define ENA 5
@@ -13,7 +13,7 @@
 #define IN3 9
 #define IN4 11
 
-class ElegooMotorUnit
+class ElegooMotorUnit: ElegooBase
 {
 private:
 
@@ -26,7 +26,7 @@ public:
 	{
 	}
 
-	void setup()
+	ElegooMotorUnit & setup()
 	{
 		pinMode(ENA, OUTPUT);
 		pinMode(ENB, OUTPUT);
@@ -34,88 +34,92 @@ public:
 		pinMode(IN2, OUTPUT);
 		pinMode(IN3, OUTPUT);
 		pinMode(IN4, OUTPUT);
+		return *this;
 	}
 
-	int moveForwards(int delayMS = 0)
+	ElegooMotorUnit & moveForwards(int delayMS = 0)
 	{
 		moveWheels(HIGH, LOW, LOW, HIGH);
 		printMovement(delayMS, ElegooCommand::MOVE_FORWARDS);
 		delay(delayMS);
-		return ElegooConstants::OK;
+		return *this;
 	}
 
-	int moveBackwards(int delayMS = 500)
+	ElegooMotorUnit & moveBackwards(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, HIGH, LOW);
 		printMovement(delayMS, ElegooCommand::MOVE_BACKWARDS);
 		delay(delayMS);
-		return ElegooConstants::OK;
+		return *this;
 	}
 
-	int turnLeft(int delayMS = 500)
+	ElegooMotorUnit & turnLeft(int delayMS = 500)
 	{
 		moveWheels(LOW, HIGH, LOW, HIGH);
 		printMovement(delayMS, ElegooCommand::TURN_LEFT);
 		delay(delayMS);
-		return ElegooConstants::OK;
+		return *this;
 	}
 
-	int turnHalfLeft(int delayMS = 250)
+	ElegooMotorUnit & turnHalfLeft(int delayMS = 250)
 	{
 		return turnLeft(delayMS);
 	}
 
-	int turnRight(int delayMS = 500)
+	ElegooMotorUnit & turnRight(int delayMS = 500)
 	{
 		moveWheels(HIGH, LOW, HIGH, LOW);
 		printMovement(delayMS, ElegooCommand::TURN_RIGHT);
 		delay(delayMS);
-		return ElegooConstants::OK;
+		return *this;
 	}
 
-	int turnHalfRight(int delayMS = 250)
+	ElegooMotorUnit & turnHalfRight(int delayMS = 250)
 	{
 		return turnRight(delayMS);
 	}
 
-	int stopMoving(int delayMS = 250)
+	ElegooMotorUnit & stopMoving(int delayMS = 250)
 	{
 		stopWheels();
 		printMovement(delayMS, ElegooCommand::STOP_MOVING);
 		delay(delayMS);
-		return ElegooConstants::OK;
+		return *this;
 	}
 
 private:
 
-	void powerOnWheels()
+	ElegooMotorUnit & powerOnWheels()
 	{
 		analogWrite(ENA, config.SPEED);
 		analogWrite(ENB, config.SPEED);
+		return *this;
 	}
 
-	void stopWheels()
+	ElegooMotorUnit & stopWheels()
 	{
 		digitalWrite(ENA, LOW);
 		digitalWrite(ENB, LOW);
+		return *this;
 	}
 
-	void moveWheels(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
+	ElegooMotorUnit & moveWheels(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
 	{
 		powerOnWheels();
 		digitalWrite(IN1, valIn1);
 		digitalWrite(IN2, valIn2);
 		digitalWrite(IN3, valIn3);
 		digitalWrite(IN4, valIn4);
+		return *this;
 	}
 
-	void printMovement(int delayMs, ElegooCommand cmd)
+	ElegooMotorUnit & printMovement(int delayMs, ElegooCommand cmd)
 	{
 		Serial.print(ElegooCommandUtil::getCommandString(cmd));
 		Serial.print(": ");
 		Serial.print(delayMs);
 		Serial.println(" MS");
-
+		return *this;
 	}
 };
 
