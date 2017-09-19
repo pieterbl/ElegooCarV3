@@ -7,7 +7,7 @@ The idea of the project is to have an object-oriented approach to control the ca
 | :--- | :--- |
 | Bluetooth remote controlled | Implementation available |
 | Infrared remote controlled | Implementation available |
-| Switching driving algorithm via remote control | Implementation available |
+| Switching driving algorithm via bluetooth remote control | Implementation available |
 | Manual mode, without obstacle avoidance | Simple implementation available. Only moves a short distance at a time
 | Automatic mode one (Auto-1), continuous driving with obstacle avoidance | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
 | Automatic mode two (Auto-2), interrupted driving with rescan of environment | Simple implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |

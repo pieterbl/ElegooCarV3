@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define DEBUG_THE_CAR 0
+#define DEBUG_THE_CAR 1
 
 #include "ElegooCarV3.h"
 #include "ElegooInfraredConfig.h"
@@ -9,6 +9,7 @@
 
 ElegooCarV3 * car = 0;
 
+// TODO check how to compile/deploy this with the standard Arduino IDE
 void setup()
 {
 	ElegooCarConfig * carConfig = new ElegooCarConfig();
