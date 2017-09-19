@@ -1,9 +1,10 @@
 #ifndef __ELEGOO_CONSTANTS_H__
 #define __ELEGOO_CONSTANTS_H__
 
-enum ElegooConstants
+class ElegooConstants
 {
-	OK = 0
+public:
+	static const int OK = 0;
 };
 
 #endif
