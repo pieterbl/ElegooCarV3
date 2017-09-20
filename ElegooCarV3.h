@@ -12,6 +12,12 @@
 #include "ElegooAutomaticDriver1.h"
 #include "ElegooAutomaticDriver2.h"
 
+/*
+ * TODO most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
+ * Affected classes:
+ * - All driver classes
+ * - Driver base class (backOut function)
+ */
 class ElegooCarV3
 {
 private:

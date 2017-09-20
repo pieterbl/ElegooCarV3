@@ -26,7 +26,6 @@ public:
 
 protected:
 
-	// TODO (LOW) the backOut routine cannot be interrupted by a button press or so, this must be fixed (note: this routine is very unlikely to get called)
 	ElegooMotorUnit & backOut()
 	{
 		bool doBackOut = true;
