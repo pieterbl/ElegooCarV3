@@ -9,7 +9,6 @@
 
 ElegooCarV3 * car = 0;
 
-// TODO check how to compile/deploy this with the standard Arduino IDE
 void setup()
 {
 	ElegooCarConfig * carConfig = new ElegooCarConfig();
