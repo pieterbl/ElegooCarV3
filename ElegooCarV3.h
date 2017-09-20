@@ -26,7 +26,7 @@ private:
 
 	ElegooBluetoothReceiver bluetoothReceiver;
 
-	ElegooDriverBase * drivers[3];
+	ElegooDriverBase * drivers[4];
 
 	ElegooDriverBase * currentDriver = 0;
 
@@ -69,13 +69,17 @@ private:
 
 		drivers[ElegooCommand::AUTO_DRIVER_2] = //
 				new ElegooAutomaticDriver2(safetyDistanceInCM, distUnit, motorUnit);
+
+		drivers[ElegooCommand::LINE_TRACKING_DRIVER] = //
+				new ElegooLineTrackingDriver(safetyDistanceInCM, distUnit, motorUnit);
 	}
 
 	bool isDriver(ElegooCommand newDriver)
 	{
 		return (newDriver == ElegooCommand::MANUAL_DRIVER || //
 				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
-				newDriver == ElegooCommand::AUTO_DRIVER_2);
+				newDriver == ElegooCommand::AUTO_DRIVER_2 || //
+				newDriver == ElegooCommand::LINE_TRACKING_DRIVER);
 	}
 
 	int selectDriver(ElegooCommand newDriver)
@@ -133,6 +137,7 @@ public:
 			case ElegooCommand::MANUAL_DRIVER:
 			case ElegooCommand::AUTO_DRIVER_1:
 			case ElegooCommand::AUTO_DRIVER_2:
+			case ElegooCommand::LINE_TRACKING_DRIVER:
 				return selectDriver(cmd);
 
 			case ElegooCommand::UNK_COMMAND:

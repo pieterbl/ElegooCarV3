@@ -36,6 +36,8 @@ public:
 			return ElegooCommand::AUTO_DRIVER_1;
 		case '2':
 			return ElegooCommand::AUTO_DRIVER_2;
+		case 'T':
+			return ElegooCommand::LINE_TRACKING_DRIVER;
 		default:
 			return ElegooCommand::UNK_COMMAND;
 		}

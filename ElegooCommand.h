@@ -6,6 +6,7 @@ enum ElegooCommand // TODO Add line-tracking driver option
 	MANUAL_DRIVER = 0, //
 	AUTO_DRIVER_1 = 1,
 	AUTO_DRIVER_2 = 2,
+	LINE_TRACKING_DRIVER,
 	MOVE_FORWARDS,
 	MOVE_BACKWARDS,
 	STOP_MOVING,
