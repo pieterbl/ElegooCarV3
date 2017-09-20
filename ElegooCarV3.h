@@ -11,6 +11,7 @@
 #include "ElegooManualDriver.h"
 #include "ElegooAutomaticDriver1.h"
 #include "ElegooAutomaticDriver2.h"
+#include "ElegooLineTrackingDriver.h"
 
 /*
  * TODO most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
