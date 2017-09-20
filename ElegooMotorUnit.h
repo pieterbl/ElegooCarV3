@@ -13,7 +13,7 @@
 #define IN3 9
 #define IN4 11
 
-class ElegooMotorUnit: ElegooBase
+class ElegooMotorUnit: public ElegooBase
 {
 private:
 
