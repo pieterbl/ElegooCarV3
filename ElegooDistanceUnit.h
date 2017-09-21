@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "ElegooCarConfig.h"
+#include "ElegooMath.h"
 
 class DistanceData
 {
@@ -18,6 +19,8 @@ private:
 	ElegooCarConfig::DistanceUnitConfig & config;
 
 	Servo servo;
+
+	static const int MIN_SERVO_DELAY = 500; // TODO (LOW) can we further reduce the value for MIN_DELAY
 
 	static const int MAX_SCANNED_DISTANCES = 5;
 
@@ -142,7 +145,12 @@ private:
 
 		if (_direction != adjustedDirection)
 		{
-			const int delayInMS = 1500; // TODO optimize? if change in direction is small, 500 ms will also do
+			int delayInMS = ElegooMath::distance(_direction, adjustedDirection); // values between 0-180
+			delayInMS *= 10; // values between 0-1800
+			if (delayInMS < MIN_SERVO_DELAY)
+			{
+				delayInMS = MIN_SERVO_DELAY;
+			}
 			delay(delayInMS);
 		}
 		_direction = adjustedDirection;
