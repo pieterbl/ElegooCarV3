@@ -39,24 +39,24 @@ public:
 
 	ElegooMotorUnit & moveForwards(int delayMS = 0)
 	{
-		moveWheels(HIGH, LOW, LOW, HIGH);
 		printMovement(delayMS, ElegooCommand::MOVE_FORWARDS);
+		moveWheels(HIGH, LOW, LOW, HIGH);
 		delay(delayMS);
 		return *this;
 	}
 
 	ElegooMotorUnit & moveBackwards(int delayMS = 500)
 	{
-		moveWheels(LOW, HIGH, HIGH, LOW);
 		printMovement(delayMS, ElegooCommand::MOVE_BACKWARDS);
+		moveWheels(LOW, HIGH, HIGH, LOW);
 		delay(delayMS);
 		return *this;
 	}
 
 	ElegooMotorUnit & turnLeft(int delayMS = 500)
 	{
-		moveWheels(LOW, HIGH, LOW, HIGH);
 		printMovement(delayMS, ElegooCommand::TURN_LEFT);
+		moveWheels(LOW, HIGH, LOW, HIGH);
 		delay(delayMS);
 		return *this;
 	}
@@ -68,8 +68,8 @@ public:
 
 	ElegooMotorUnit & turnRight(int delayMS = 500)
 	{
-		moveWheels(HIGH, LOW, HIGH, LOW);
 		printMovement(delayMS, ElegooCommand::TURN_RIGHT);
+		moveWheels(HIGH, LOW, HIGH, LOW);
 		delay(delayMS);
 		return *this;
 	}
@@ -81,8 +81,8 @@ public:
 
 	ElegooMotorUnit & stopMoving(int delayMS = 250)
 	{
-		stopWheels();
 		printMovement(delayMS, ElegooCommand::STOP_MOVING);
+		stopWheels();
 		delay(delayMS);
 		return *this;
 	}

@@ -34,8 +34,7 @@ protected:
 
 		do
 		{
-			motorUnit.moveBackwards();
-			motorUnit.stopMoving();
+			motorUnit.moveBackwards().stopMoving();
 			rightDistance = distUnit.rightDistance();
 			leftDistance = distUnit.leftDistance();
 
