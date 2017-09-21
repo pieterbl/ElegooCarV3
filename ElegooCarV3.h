@@ -18,10 +18,6 @@
  * Affected classes:
  * - All driver classes
  * - Driver base class (backOut function)
- *
- * TODO (HIGH) test the instructions for the Arduino IDE
- *
- * TODO (HIGH) Remove "(section is under construction)" from the README.md file
  */
 class ElegooCarV3
 {
