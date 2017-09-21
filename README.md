@@ -96,8 +96,8 @@ avrdude done.  Thank you.
 upload done
 ```
 
-# My References
-| Topic | Pointer |
+# Some Web Links
+| Topic | Link |
 | :--- | :--- |
 | Github Markdown Guide - General | https://guides.github.com/features/mastering-markdown/ |
 | Github Markdown Guide - GitHub Flavored | https://help.github.com/articles/basic-writing-and-formatting-syntax/ |
