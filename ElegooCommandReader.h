@@ -39,30 +39,54 @@ public:
 		return cmd;
 	}
 
-	void testInfrared() // TODO (LOW) make this work
+	// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
+	void testInfrared()
 	{
+		long noCmdCnt = 0;
 		while (true)
 		{
 			ElegooCommand cmd = infraredReceiver.readCommand();
-			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
-			Serial.println(cmdString);
-			if (cmd == ElegooCommand::STOP_MOVING)
+			if (cmd == ElegooCommand::NO_COMMAND)
 			{
-				return;
+				noCmdCnt++;
+			}
+			else
+			{
+				const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
+				Serial.print(noCmdCnt);
+				Serial.print(": ");
+				Serial.println(cmdString);
+
+				if (cmd == ElegooCommand::STOP_MOVING)
+				{
+					return;
+				}
 			}
 		}
 	}
 
-	void testBluetooth() // TODO (LOW) make this work
+	// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
+	void testBluetooth()
 	{
+		long noCmdCnt = 0;
 		while (true)
 		{
 			ElegooCommand cmd = bluetoothReceiver.readCommand();
-			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
-			Serial.println(cmdString);
-			if (cmd == ElegooCommand::STOP_MOVING)
+			if (cmd == ElegooCommand::NO_COMMAND)
 			{
-				return;
+				noCmdCnt++;
+			}
+			else
+			{
+				const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
+				Serial.print(noCmdCnt);
+				Serial.print(": ");
+				Serial.println(cmdString);
+
+				if (cmd == ElegooCommand::STOP_MOVING)
+				{
+					return;
+				}
 			}
 		}
 	}

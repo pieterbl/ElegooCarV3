@@ -7,8 +7,9 @@
 #include "ElegooInfraredConfigInterface.h"
 #include "ElegooCarConfig.h"
 #include "ElegooCommand.h"
+#include "ElegooReceiver.h"
 
-class ElegooInfraredReceiver
+class ElegooInfraredReceiver: public ElegooReceiver
 {
 private:
 

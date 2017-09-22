@@ -133,7 +133,6 @@ public:
 			return ElegooConstants::OK;
 		}
 
-		// TODO (HIGH) test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls
 		if (!usingManualDriver() && cmd != ElegooCommand::NO_COMMAND)
 		{
 			motorUnit.stopMoving();

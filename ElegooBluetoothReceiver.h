@@ -2,11 +2,13 @@
 #define __ELEGOO_BLUETOOTH_RECEIVER_H__
 
 #include <Arduino.h>
+
 #include "ElegooBluetoothConfigInterface.h"
 #include "ElegooCarConfig.h"
 #include "ElegooCommand.h"
+#include "ElegooReceiver.h"
 
-class ElegooBluetoothReceiver
+class ElegooBluetoothReceiver: public ElegooReceiver
 {
 private:
 

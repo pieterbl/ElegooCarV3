@@ -30,6 +30,14 @@ public:
 	{
 		switch (cmd)
 		{
+		case MANUAL_DRIVER:
+			return "Select Manual Driver";
+		case AUTO_DRIVER_1:
+			return "Select Autonomous Driver 1";
+		case AUTO_DRIVER_2:
+			return "Select Autonomous Driver 2";
+		case LINE_TRACKING_DRIVER:
+			return "Select Line Tracking Driver";
 		case MOVE_FORWARDS:
 			return "Move Forwards";
 		case TURN_RIGHT:
