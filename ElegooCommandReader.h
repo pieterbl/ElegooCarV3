@@ -1,6 +1,10 @@
 #ifndef __ELEGOO_COMMAND_READER_H__
 #define __ELEGOO_COMMAND_READER_H__
 
+#include "ElegooCommand.h"
+#include "ElegooInfraredReceiver.h"
+#include "ElegooBluetoothReceiver.h"
+
 class ElegooCommandReader
 {
 private:

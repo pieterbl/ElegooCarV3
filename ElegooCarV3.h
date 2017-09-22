@@ -8,6 +8,7 @@
 #include "ElegooMotorUnit.h"
 #include "ElegooInfraredReceiver.h"
 #include "ElegooBluetoothReceiver.h"
+#include "ElegooCommandReader.h"
 #include "ElegooManualDriver.h"
 #include "ElegooAutomaticDriver1.h"
 #include "ElegooAutomaticDriver2.h"
