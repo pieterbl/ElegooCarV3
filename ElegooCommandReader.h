@@ -39,39 +39,25 @@ public:
 		return cmd;
 	}
 
-	// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
 	void testInfrared()
 	{
-		long noCmdCnt = 0;
-		while (true)
-		{
-			ElegooCommand cmd = infraredReceiver.readCommand();
-			if (cmd == ElegooCommand::NO_COMMAND)
-			{
-				noCmdCnt++;
-			}
-			else
-			{
-				const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
-				Serial.print(noCmdCnt);
-				Serial.print(": ");
-				Serial.println(cmdString);
-
-				if (cmd == ElegooCommand::STOP_MOVING)
-				{
-					return;
-				}
-			}
-		}
+		// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
+		ElegooCommandReader::testReceiver(infraredReceiver);
 	}
 
-	// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
 	void testBluetooth()
+	{
+		// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
+		ElegooCommandReader::testReceiver(bluetoothReceiver);
+	}
+
+private:
+	static void testReceiver(ElegooReceiver & receiver)
 	{
 		long noCmdCnt = 0;
 		while (true)
 		{
-			ElegooCommand cmd = bluetoothReceiver.readCommand();
+			ElegooCommand cmd = receiver.readCommand();
 			if (cmd == ElegooCommand::NO_COMMAND)
 			{
 				noCmdCnt++;
