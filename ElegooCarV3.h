@@ -14,7 +14,7 @@
 #include "ElegooLineTrackingDriver.h"
 
 /*
- * TODO most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
+ * TODO (HIGH) most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
  * Affected classes:
  * - All driver classes
  * - Driver base class (backOut function)
@@ -29,9 +29,11 @@ private:
 
 	ElegooMotorUnit motorUnit;
 
-	ElegooInfraredReceiver infraredReceiver;
+	ElegooInfraredReceiver infraredReceiver; // TODO (LOW) Move to inside the ElegooCommand Reader?
 
-	ElegooBluetoothReceiver bluetoothReceiver;
+	ElegooBluetoothReceiver bluetoothReceiver; // TODO (LOW) Move to inside the ElegooCommand Reader?
+
+	ElegooCommandReader commandReader;
 
 	ElegooDriverBase * drivers[4];
 
@@ -47,6 +49,7 @@ public:
 			motorUnit(carConfig->motorUnitConfig), //
 			infraredReceiver(carConfig->infraredReceiverConfig), //
 			bluetoothReceiver(carConfig->bluetoothReceiverConfig), //
+			commandReader(infraredReceiver, bluetoothReceiver), //
 			safetyDistanceInCM(carConfig->SAFETY_DISTANCE_CM)
 	{
 	}
@@ -121,7 +124,7 @@ public:
 
 	int drive()
 	{
-		ElegooCommand cmd = readCommand();
+		ElegooCommand cmd = commandReader.readCommand();
 		if (cmd == ElegooCommand::STOP_MOVING)
 		{
 			motorUnit.stopMoving();
@@ -129,7 +132,7 @@ public:
 			return ElegooConstants::OK;
 		}
 
-		// TODO test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls
+		// TODO (HIGH) test that we indeed get NO_COMMAND from both the Infrared and the Bluetooth remote controls
 		if (!usingManualDriver() && cmd != ElegooCommand::NO_COMMAND)
 		{
 			motorUnit.stopMoving();
@@ -161,30 +164,6 @@ public:
 		}
 	}
 
-private:
-
-	// May also return UNKNOWN_CMD or NO_COMMAND
-	ElegooCommand readCommand()
-	{
-		ElegooCommand cmd = ElegooCommand::NO_COMMAND;
-
-		cmd = infraredReceiver.readCommand();
-		if (ElegooCommandUtil::isValidCommand(cmd))
-		{
-			return cmd;
-		}
-
-		cmd = bluetoothReceiver.readCommand();
-		if (ElegooCommandUtil::isValidCommand(cmd))
-		{
-			return cmd;
-		}
-
-		return cmd;
-	}
-
-public:
-
 	void testDistanceUnit()
 	{
 		Serial.println("Test Distance Unit");
@@ -194,32 +173,14 @@ public:
 		Serial.println();
 	}
 
-	void testInfrared() // TODO (LOW) make this work
+	void testInfrared()
 	{
-		while (true)
-		{
-			ElegooCommand cmd = infraredReceiver.readCommand();
-			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
-			Serial.println(cmdString);
-			if (cmd == ElegooCommand::STOP_MOVING)
-			{
-				return;
-			}
-		}
+		commandReader.testInfrared();
 	}
 
-	void testBluetooth() // TODO (LOW) make this work
+	void testBluetooth()
 	{
-		while (true)
-		{
-			ElegooCommand cmd = bluetoothReceiver.readCommand();
-			const char * cmdString = ElegooCommandUtil::getCommandString(cmd);
-			Serial.println(cmdString);
-			if (cmd == ElegooCommand::STOP_MOVING)
-			{
-				return;
-			}
-		}
+		commandReader.testBluetooth();
 	}
 
 };
