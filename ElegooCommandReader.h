@@ -12,6 +12,10 @@ private:
 
 	ElegooBluetoothReceiver & bluetoothReceiver;
 
+	static const int EMPTY_CACHE = -1;
+
+	int cachedCommand = EMPTY_CACHE;
+
 public:
 	// TODO (LOW) If more receivers must be supported, we cannot stick to constructor arguments
 	ElegooCommandReader(ElegooInfraredReceiver & pInfraredReceiver, ElegooBluetoothReceiver & pBluetoothReceiver) :
@@ -19,8 +23,42 @@ public:
 	{
 	}
 
+	bool hasCommand()
+	{
+		if (cachedCommand == EMPTY_CACHE)
+		{
+			cachedCommand = readTheCommand();
+		}
+
+		if (cachedCommand == ElegooCommand::NO_COMMAND)
+		{
+			cachedCommand = EMPTY_CACHE;
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	// May also return UNKNOWN_CMD or NO_COMMAND
 	ElegooCommand readCommand()
+	{
+		if (hasCommand())
+		{
+			ElegooCommand theCmd = (ElegooCommand) cachedCommand;
+			cachedCommand = EMPTY_CACHE;
+			return theCmd;
+		}
+		else
+		{
+			return ElegooCommand::NO_COMMAND;
+		}
+	}
+
+private:
+	// May also return UNKNOWN_CMD or NO_COMMAND
+	ElegooCommand readTheCommand()
 	{
 		ElegooCommand cmd = ElegooCommand::NO_COMMAND;
 
@@ -39,6 +77,7 @@ public:
 		return cmd;
 	}
 
+public:
 	void testInfrared()
 	{
 		// positively tested that we detect NO_COMMAND, as long as no buttons are pressed
