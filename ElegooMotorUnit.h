@@ -40,24 +40,21 @@ public:
 	ElegooMotorUnit & moveForwards(int delayMS = 0)
 	{
 		printMovement(delayMS, ElegooCommand::MOVE_FORWARDS);
-		moveWheels(HIGH, LOW, LOW, HIGH);
-		delay(delayMS);
+		moveWheelsForTime(HIGH, LOW, LOW, HIGH, delayMS);
 		return *this;
 	}
 
 	ElegooMotorUnit & moveBackwards(int delayMS = 500)
 	{
 		printMovement(delayMS, ElegooCommand::MOVE_BACKWARDS);
-		moveWheels(LOW, HIGH, HIGH, LOW);
-		delay(delayMS);
+		moveWheelsForTime(LOW, HIGH, HIGH, LOW, delayMS);
 		return *this;
 	}
 
 	ElegooMotorUnit & turnLeft(int delayMS = 500)
 	{
 		printMovement(delayMS, ElegooCommand::TURN_LEFT);
-		moveWheels(LOW, HIGH, LOW, HIGH);
-		delay(delayMS);
+		moveWheelsForTime(LOW, HIGH, LOW, HIGH, delayMS);
 		return *this;
 	}
 
@@ -69,8 +66,7 @@ public:
 	ElegooMotorUnit & turnRight(int delayMS = 500)
 	{
 		printMovement(delayMS, ElegooCommand::TURN_RIGHT);
-		moveWheels(HIGH, LOW, HIGH, LOW);
-		delay(delayMS);
+		moveWheelsForTime(HIGH, LOW, HIGH, LOW, delayMS);
 		return *this;
 	}
 
@@ -103,7 +99,21 @@ private:
 		return *this;
 	}
 
-	ElegooMotorUnit & moveWheels(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
+	ElegooMotorUnit & moveWheelsForTime(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4, int delay)
+	{
+		powerOnWheels();
+		for (int i = 0; i < delay; i += 50)
+		{
+			digitalWrite(IN1, valIn1);
+			digitalWrite(IN2, valIn2);
+			digitalWrite(IN3, valIn3);
+			digitalWrite(IN4, valIn4);
+		}
+		return *this;
+	}
+
+	// TODO DELETE METHOD
+	ElegooMotorUnit & __moveWheels__(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
 	{
 		powerOnWheels();
 		digitalWrite(IN1, valIn1);
