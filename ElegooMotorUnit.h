@@ -112,17 +112,6 @@ private:
 		return *this;
 	}
 
-	// TODO DELETE METHOD
-	ElegooMotorUnit & __moveWheels__(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4)
-	{
-		powerOnWheels();
-		digitalWrite(IN1, valIn1);
-		digitalWrite(IN2, valIn2);
-		digitalWrite(IN3, valIn3);
-		digitalWrite(IN4, valIn4);
-		return *this;
-	}
-
 	ElegooMotorUnit & printMovement(int delayMs, ElegooCommand cmd)
 	{
 		Serial.print(ElegooCommandUtil::getCommandString(cmd));
