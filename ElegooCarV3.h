@@ -60,6 +60,7 @@ public:
 		Serial.begin(carConfig->serialConfig.BAUD_RATE);
 		distUnit.setup();
 		motorUnit.setup();
+		motorUnit.registerCommandReader(&commandReader);
 		infraredReceiver.setup();
 		bluetoothReceiver.setup();
 

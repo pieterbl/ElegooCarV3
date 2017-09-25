@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "ElegooBase.h"
 #include "ElegooCommand.h"
+#include "ElegooCommandReader.h"
 #include "ElegooCarConfig.h"
 
 #define ENA 5
@@ -19,10 +20,13 @@ private:
 
 	ElegooCarConfig::MotorUnitConfig & config;
 
+	ElegooCommandReader * commandReader;
+
 public:
 
 	ElegooMotorUnit(ElegooCarConfig::MotorUnitConfig & pMotorUnitConfig) :
-			config(pMotorUnitConfig)
+			config(pMotorUnitConfig), //
+			commandReader(0)
 	{
 	}
 
@@ -34,6 +38,12 @@ public:
 		pinMode(IN2, OUTPUT);
 		pinMode(IN3, OUTPUT);
 		pinMode(IN4, OUTPUT);
+		return *this;
+	}
+
+	ElegooMotorUnit & registerCommandReader(ElegooCommandReader * pCommandReader)
+	{
+		commandReader = pCommandReader;
 		return *this;
 	}
 
@@ -85,6 +95,16 @@ public:
 
 private:
 
+	bool hasCommand()
+	{
+		if (commandReader == 0)
+		{
+			return false;
+		}
+
+		return commandReader->hasCommand();
+	}
+
 	ElegooMotorUnit & powerOnWheels()
 	{
 		analogWrite(ENA, config.SPEED);
@@ -99,16 +119,24 @@ private:
 		return *this;
 	}
 
-	ElegooMotorUnit & moveWheelsForTime(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4, int delay)
+	ElegooMotorUnit & moveWheelsForTime(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4, int timeMS)
 	{
 		powerOnWheels();
-		for (int i = 0; i < delay; i += 50)
+
+		for (int i = 0; i < timeMS; i += 50)
 		{
 			digitalWrite(IN1, valIn1);
 			digitalWrite(IN2, valIn2);
 			digitalWrite(IN3, valIn3);
 			digitalWrite(IN4, valIn4);
+
+			// have this check behind the digitalWrite statements, so that in case timeMS==0, we also move the wheels
+			if (hasCommand())
+			{
+				return *this;
+			}
 		}
+
 		return *this;
 	}
 
