@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #define DEBUG_THE_CAR 1
+#define TEST_THE_CAR 0
 
 #include "ElegooCarV3.h"
 #include "ElegooInfraredConfig.h"
@@ -29,9 +30,11 @@ void setup()
 	car->registerBluetoothConfig(new MyBluetoothConfig());
 	car->testDistanceUnit();
 
-	// TODO (LOW) activate tests
-	//car->testInfrared();
-	//car->testBluetooth();
+	if (TEST_THE_CAR)
+	{
+		car->testInfrared();
+		car->testBluetooth();
+	}
 }
 
 void loop()
