@@ -15,7 +15,7 @@
 #include "ElegooLineTrackingDriver.h"
 
 /*
- * TODO (HIGH) most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
+ * TODO (HIGH: TO-TEST) most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
  * Affected classes:
  * - All driver classes
  * - Driver base class (backOut function)

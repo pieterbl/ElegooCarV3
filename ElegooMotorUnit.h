@@ -14,6 +14,53 @@
 #define IN3 9
 #define IN4 11
 
+class Action
+{
+public:
+	Action()
+	{
+	}
+
+	virtual void execute()
+	{
+	}
+
+	virtual ~Action()
+	{
+	}
+};
+
+class DriveAction: public Action
+{
+private:
+	uint8_t pin1, pin2, pin3, pin4;
+	uint8_t val1, val2, val3, val4;
+
+public:
+	DriveAction( //
+			uint8_t pPin1, uint8_t pVal1, //
+			uint8_t pPin2, uint8_t pVal2, //
+			uint8_t pPin3, uint8_t pVal3, //
+			uint8_t pPin4, uint8_t pVal4) : //
+			Action()
+	{
+		pin1 = pPin1, pin2 = pPin2, pin3 = pPin3, pin4 = pPin4;
+		val1 = pVal1, val2 = pVal2, val3 = pVal3, val4 = pVal4;
+	}
+
+	virtual void execute()
+	{
+		digitalWrite(pin1, val1);
+		digitalWrite(pin2, val2);
+		digitalWrite(pin3, val3);
+		digitalWrite(pin4, val4);
+	}
+
+	virtual ~DriveAction()
+	{
+	}
+};
+
 class ElegooMotorUnit: public ElegooBase
 {
 private:
@@ -89,7 +136,18 @@ public:
 	{
 		printMovement(delayMS, ElegooCommand::STOP_MOVING);
 		stopWheels();
-		delay(delayMS);
+
+		// TODO: refactor, we now have 2 loops checking for hasCommand() and calling delay(50)
+		for (int i = 0; i < delayMS; i += 50)
+		{
+			if (hasCommand())
+			{
+				return *this;
+			}
+
+			delay(50);
+		}
+
 		return *this;
 	}
 
@@ -123,6 +181,7 @@ private:
 	{
 		powerOnWheels();
 
+		// TODO: refactor, we now have 2 loops checking for hasCommand() and calling delay(50)
 		for (int i = 0; i < timeMS; i += 50)
 		{
 			digitalWrite(IN1, valIn1);
@@ -135,6 +194,8 @@ private:
 			{
 				return *this;
 			}
+
+			delay(50);
 		}
 
 		return *this;
