@@ -6,6 +6,10 @@
 class ElegooBase
 {
 public:
+	ElegooBase()
+	{
+	}
+
 	int statusOK()
 	{
 		return ElegooConstants::OK;
