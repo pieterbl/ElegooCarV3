@@ -72,6 +72,7 @@ private:
 public:
 
 	ElegooMotorUnit(ElegooCarConfig::MotorUnitConfig & pMotorUnitConfig) :
+			ElegooBase(), //
 			config(pMotorUnitConfig), //
 			commandReader(0)
 	{
@@ -135,20 +136,12 @@ public:
 	ElegooMotorUnit & stopMoving(int delayMS = 250)
 	{
 		printMovement(delayMS, ElegooCommand::STOP_MOVING);
+
 		stopWheels();
 
-		// TODO: refactor, we now have 2 loops checking for hasCommand() and calling delay(50)
-		for (int i = 0; i < delayMS; i += 50)
-		{
-			if (hasCommand())
-			{
-				return *this;
-			}
+		Action noAction;
 
-			delay(50);
-		}
-
-		return *this;
+		return runInterruptableAction(noAction, delayMS);
 	}
 
 private:
@@ -181,21 +174,31 @@ private:
 	{
 		powerOnWheels();
 
-		// TODO: refactor, we now have 2 loops checking for hasCommand() and calling delay(50)
-		for (int i = 0; i < timeMS; i += 50)
-		{
-			digitalWrite(IN1, valIn1);
-			digitalWrite(IN2, valIn2);
-			digitalWrite(IN3, valIn3);
-			digitalWrite(IN4, valIn4);
+		DriveAction driveAction(IN1, valIn1, IN2, valIn2, IN3, valIn3, IN4, valIn4);
 
-			// have this check behind the digitalWrite statements, so that in case timeMS==0, we also move the wheels
+		return runInterruptableAction(driveAction, timeMS);
+	}
+
+	ElegooMotorUnit & runInterruptableAction(Action & action, int delayTotalMS, int delayIncrementMS = 50)
+	{
+		// call execute, so that in case delayTotalMS==0, we at least execute once
+		action.execute();
+
+		for (int i = 0; i < delayTotalMS; i += delayIncrementMS)
+		{
 			if (hasCommand())
 			{
 				return *this;
 			}
 
-			delay(50);
+			delay(delayIncrementMS);
+
+			if (hasCommand())
+			{
+				return *this;
+			}
+
+			action.execute();
 		}
 
 		return *this;
