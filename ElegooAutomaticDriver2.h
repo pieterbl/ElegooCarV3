@@ -3,6 +3,7 @@
 
 #include "ElegooDriverBase.h"
 
+// is interruptible
 class ElegooAutomaticDriver2: public ElegooDriverBase
 {
 public:
@@ -35,8 +36,14 @@ public:
 	}
 
 private:
+	// is interruptible
 	ElegooMotorUnit & adjustPositionForDirection(int direction)
 	{
+		if (motorUnit.hasCommand())
+		{
+			return motorUnit;
+		}
+
 		if (direction == ElegooDistanceUnit::HALF_LEFT)
 		{
 			return motorUnit.turnHalfLeft();
@@ -53,6 +60,7 @@ private:
 		{
 			return motorUnit.turnRight();
 		}
+
 		return motorUnit;
 	}
 };

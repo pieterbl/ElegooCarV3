@@ -153,6 +153,11 @@ private:
 
 	ElegooMotorUnit & moveWheelsForTime(uint8_t valIn1, uint8_t valIn2, uint8_t valIn3, uint8_t valIn4, int timeMS)
 	{
+		if (hasCommand())
+		{
+			return *this;
+		}
+
 		powerOnWheels();
 
 		DriveAction driveAction(IN1, valIn1, IN2, valIn2, IN3, valIn3, IN4, valIn4);
@@ -163,7 +168,8 @@ private:
 	ElegooMotorUnit & runInterruptableAction(Action & action, int delayTotalMS, int delayIncrementMS = 50)
 	{
 		// call execute, so that in case delayTotalMS==0, we at least execute once
-		action.execute();
+		// TODO (HIGH: TO-TEST) is it correct to comment out ??
+		// action.execute();
 
 		for (int i = 0; i < delayTotalMS; i += delayIncrementMS)
 		{

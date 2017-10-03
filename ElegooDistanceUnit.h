@@ -185,34 +185,10 @@ private:
 
 	void scanDistances(DistanceData distances[])
 	{
-		if (hasCommand())
-		{
-			return;
-		}
 		distances[0] = readDistanceDataForDirection(config.SERVO_RIGHT);
-
-		if (hasCommand())
-		{
-			return;
-		}
 		distances[1] = readDistanceDataForDirection(HALF_RIGHT);
-
-		if (hasCommand())
-		{
-			return;
-		}
 		distances[2] = readDistanceDataForDirection(FRONT);
-
-		if (hasCommand())
-		{
-			return;
-		}
 		distances[3] = readDistanceDataForDirection(HALF_LEFT);
-
-		if (hasCommand())
-		{
-			return;
-		}
 		distances[4] = readDistanceDataForDirection(config.SERVO_LEFT);
 	}
 
@@ -227,6 +203,11 @@ private:
 
 	int readDistanceForDirection(const int direction)
 	{
+		if (hasCommand())
+		{
+			return 0;
+		}
+
 		setDirection(direction);
 		int distance = readDistance();
 #if DEBUG_THE_CAR

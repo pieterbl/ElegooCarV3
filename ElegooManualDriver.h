@@ -3,6 +3,7 @@
 
 #include "ElegooDriverBase.h"
 
+// is interruptible
 class ElegooManualDriver: public ElegooDriverBase
 {
 public:

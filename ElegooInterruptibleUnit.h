@@ -9,16 +9,16 @@ class ElegooInterruptibleUnit
 private:
 	ElegooCommandReader * commandReader;
 
-public:
-	void registerCommandReader(ElegooCommandReader * pCommandReader)
-	{
-		commandReader = pCommandReader;
-	}
-
 protected:
 	ElegooInterruptibleUnit() :
 			commandReader(0)
 	{
+	}
+
+public:
+	void registerCommandReader(ElegooCommandReader * pCommandReader)
+	{
+		commandReader = pCommandReader;
 	}
 
 	bool hasCommand()
