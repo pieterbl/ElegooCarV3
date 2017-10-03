@@ -3,8 +3,7 @@
 
 #include <Arduino.h>
 #include "ElegooBase.h"
-#include "ElegooCommand.h"
-#include "ElegooCommandReader.h"
+#include "ElegooInterruptibleUnit.h"
 #include "ElegooCarConfig.h"
 
 #define ENA 5
@@ -61,20 +60,18 @@ public:
 	}
 };
 
-class ElegooMotorUnit: public ElegooBase
+class ElegooMotorUnit: public ElegooBase, public ElegooInterruptibleUnit
 {
 private:
 
 	ElegooCarConfig::MotorUnitConfig & config;
 
-	ElegooCommandReader * commandReader;
-
 public:
 
 	ElegooMotorUnit(ElegooCarConfig::MotorUnitConfig & pMotorUnitConfig) :
 			ElegooBase(), //
-			config(pMotorUnitConfig), //
-			commandReader(0)
+			ElegooInterruptibleUnit(), //
+			config(pMotorUnitConfig)
 	{
 	}
 
@@ -86,12 +83,6 @@ public:
 		pinMode(IN2, OUTPUT);
 		pinMode(IN3, OUTPUT);
 		pinMode(IN4, OUTPUT);
-		return *this;
-	}
-
-	ElegooMotorUnit & registerCommandReader(ElegooCommandReader * pCommandReader)
-	{
-		commandReader = pCommandReader;
 		return *this;
 	}
 
@@ -145,16 +136,6 @@ public:
 	}
 
 private:
-
-	bool hasCommand()
-	{
-		if (commandReader == 0)
-		{
-			return false;
-		}
-
-		return commandReader->hasCommand();
-	}
 
 	ElegooMotorUnit & powerOnWheels()
 	{

@@ -4,10 +4,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "ElegooCarConfig.h"
-// TODO move to base class
-#include "ElegooCommand.h"
-// TODO move to base class
-#include "ElegooCommandReader.h"
+#include "ElegooInterruptibleUnit.h"
 #include "ElegooMath.h"
 
 class DistanceData
@@ -17,15 +14,12 @@ public:
 	int distance = 0;
 };
 
-class ElegooDistanceUnit
+class ElegooDistanceUnit: public ElegooInterruptibleUnit
 {
 private:
 	ElegooCarConfig::DistanceUnitConfig & config;
 
 	Servo servo;
-
-	// TODO move to base class
-	ElegooCommandReader * commandReader;
 
 	static const int MIN_SERVO_DELAY = 500; // TODO (LOW) can we further reduce the value for MIN_DELAY
 
@@ -75,9 +69,9 @@ public:
 	}
 
 	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig) :
+			ElegooInterruptibleUnit(), //
 			config(pConfig), //
-			servo(), //
-			commandReader(0)
+			servo()
 	{
 	}
 
@@ -86,13 +80,6 @@ public:
 		servo.attach(config.SERVO_PIN);
 		pinMode(config.ECHO_PIN, INPUT);
 		pinMode(config.TRIGGER_PIN, INPUT);
-	}
-
-	// TODO move to base class
-	ElegooDistanceUnit & registerCommandReader(ElegooCommandReader * pCommandReader)
-	{
-		commandReader = pCommandReader;
-		return *this;
 	}
 
 	void test()
@@ -266,17 +253,6 @@ private:
 	int getServoMaxPos()
 	{
 		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
-	}
-
-	// TODO move to base class
-	bool hasCommand()
-	{
-		if (commandReader == 0)
-		{
-			return false;
-		}
-
-		return commandReader->hasCommand();
 	}
 
 };
