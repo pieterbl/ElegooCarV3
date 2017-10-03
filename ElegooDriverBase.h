@@ -34,6 +34,12 @@ protected:
 
 		do
 		{
+			if (motorUnit.hasCommand())
+			{
+				// escape from the loop !!
+				return motorUnit;
+			}
+
 			motorUnit.moveBackwards().stopMoving();
 			rightDistance = distUnit.rightDistance();
 			leftDistance = distUnit.leftDistance();

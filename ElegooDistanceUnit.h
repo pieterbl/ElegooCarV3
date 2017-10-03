@@ -59,13 +59,11 @@ public:
 	boolean isFarRightDirection(const int direction)
 	{
 		return (direction < HALF_RIGHT);
-
 	}
 
 	boolean isFarLeftDirection(const int direction)
 	{
 		return (direction > HALF_LEFT);
-
 	}
 
 	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig) :
