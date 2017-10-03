@@ -59,6 +59,7 @@ public:
 	{
 		Serial.begin(carConfig->serialConfig.BAUD_RATE);
 		distUnit.setup();
+		distUnit.registerCommandReader(&commandReader);
 		motorUnit.setup();
 		motorUnit.registerCommandReader(&commandReader);
 		infraredReceiver.setup();

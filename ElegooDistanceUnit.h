@@ -4,6 +4,10 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "ElegooCarConfig.h"
+// TODO move to base class
+#include "ElegooCommand.h"
+// TODO move to base class
+#include "ElegooCommandReader.h"
 #include "ElegooMath.h"
 
 class DistanceData
@@ -19,6 +23,9 @@ private:
 	ElegooCarConfig::DistanceUnitConfig & config;
 
 	Servo servo;
+
+	// TODO move to base class
+	ElegooCommandReader * commandReader;
 
 	static const int MIN_SERVO_DELAY = 500; // TODO (LOW) can we further reduce the value for MIN_DELAY
 
@@ -68,7 +75,9 @@ public:
 	}
 
 	ElegooDistanceUnit(ElegooCarConfig::DistanceUnitConfig & pConfig) :
-			config(pConfig), servo()
+			config(pConfig), //
+			servo(), //
+			commandReader(0)
 	{
 	}
 
@@ -77,6 +86,13 @@ public:
 		servo.attach(config.SERVO_PIN);
 		pinMode(config.ECHO_PIN, INPUT);
 		pinMode(config.TRIGGER_PIN, INPUT);
+	}
+
+	// TODO move to base class
+	ElegooDistanceUnit & registerCommandReader(ElegooCommandReader * pCommandReader)
+	{
+		commandReader = pCommandReader;
+		return *this;
 	}
 
 	void test()
@@ -182,10 +198,34 @@ private:
 
 	void scanDistances(DistanceData distances[])
 	{
+		if (hasCommand())
+		{
+			return;
+		}
 		distances[0] = readDistanceDataForDirection(config.SERVO_RIGHT);
+
+		if (hasCommand())
+		{
+			return;
+		}
 		distances[1] = readDistanceDataForDirection(HALF_RIGHT);
+
+		if (hasCommand())
+		{
+			return;
+		}
 		distances[2] = readDistanceDataForDirection(FRONT);
+
+		if (hasCommand())
+		{
+			return;
+		}
 		distances[3] = readDistanceDataForDirection(HALF_LEFT);
+
+		if (hasCommand())
+		{
+			return;
+		}
 		distances[4] = readDistanceDataForDirection(config.SERVO_LEFT);
 	}
 
@@ -226,6 +266,17 @@ private:
 	int getServoMaxPos()
 	{
 		return max(config.SERVO_RIGHT, config.SERVO_LEFT);
+	}
+
+	// TODO move to base class
+	bool hasCommand()
+	{
+		if (commandReader == 0)
+		{
+			return false;
+		}
+
+		return commandReader->hasCommand();
 	}
 
 };
