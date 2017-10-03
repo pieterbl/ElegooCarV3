@@ -15,10 +15,7 @@
 #include "ElegooLineTrackingDriver.h"
 
 /*
- * TODO (HIGH: TO-TEST) most of the driving functions cannot be interrupted by a button press or so, this must be fixed (need to check Arduino interrupts, too).
- * Affected classes:
- * - All driver classes
- * - Driver base class (backOut function)
+ * TODO (HIGH: TO-TEST) driving functions can now be interrupted by a button press or so, this must be tested.
  */
 class ElegooCarV3
 {
@@ -30,9 +27,9 @@ private:
 
 	ElegooMotorUnit motorUnit;
 
-	ElegooInfraredReceiver infraredReceiver; // TODO (LOW) Move to inside the ElegooCommand Reader?
+	ElegooInfraredReceiver infraredReceiver;
 
-	ElegooBluetoothReceiver bluetoothReceiver; // TODO (LOW) Move to inside the ElegooCommand Reader?
+	ElegooBluetoothReceiver bluetoothReceiver;
 
 	ElegooCommandReader commandReader;
 
