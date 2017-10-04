@@ -193,6 +193,12 @@ private:
 
 	ElegooMotorUnit & printMovement(int delayMs, ElegooCommand cmd)
 	{
+		// suppress printing in this case
+		if (hasCommand())
+		{
+			return *this;
+		}
+
 		Serial.print(ElegooCommandUtil::getCommandString(cmd));
 		Serial.print(": ");
 		Serial.print(delayMs);
