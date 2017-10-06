@@ -168,8 +168,8 @@ private:
 	ElegooMotorUnit & runInterruptableAction(Action & action, int delayTotalMS, int delayIncrementMS = 50)
 	{
 		// call execute, so that in case delayTotalMS==0, we at least execute once
-		// TODO (HIGH: TO-TEST) is it correct to comment out ??
-		// action.execute();
+		// must keep this! it adjusts the driving direction
+		action.execute();
 
 		for (int i = 0; i < delayTotalMS; i += delayIncrementMS)
 		{

@@ -19,6 +19,7 @@ public:
 	virtual int processCommand(ElegooCommand cmd)
 	{
 		DistanceData biggestDistance = distUnit.scanBiggestDistance();
+		distUnit.frontDistance(); // position "eyes" to the front
 		adjustPositionForDirection(biggestDistance.direction);
 
 		if (biggestDistance.distance < safetyDistanceInCM)
