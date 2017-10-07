@@ -26,6 +26,22 @@ public:
 
 protected:
 
+	int checkFrontForObstacles(ElegooCommand cmd)
+	{
+		if (cmd == ElegooCommand::NO_COMMAND || cmd == ElegooCommand::MOVE_FORWARDS)
+		{
+			// check front sensor and stop
+			const int frontDistance = distUnit.frontDistance();
+			if (frontDistance < safetyDistanceInCM)
+			{
+				motorUnit.stopMoving();
+				return ElegooConstants::STOPPED;
+			}
+		}
+
+		return ElegooConstants::OK;
+	}
+
 	ElegooMotorUnit & backOut()
 	{
 		bool doBackOut = true;

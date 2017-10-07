@@ -5,6 +5,7 @@ class ElegooConstants
 {
 public:
 	static const int OK = 0;
+	static const int STOPPED = 10;
 };
 
 #endif
