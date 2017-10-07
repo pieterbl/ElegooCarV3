@@ -21,7 +21,7 @@ private:
 
 	Servo servo;
 
-	static const int MIN_SERVO_DELAY = 500; // TODO (LOW) can we further reduce the value for MIN_DELAY
+	static const int MIN_SERVO_DELAY = 500; // TODO (P2-LOW) can we further reduce the value for MIN_DELAY
 
 	static const int MAX_SCANNED_DISTANCES = 5;
 

@@ -10,6 +10,9 @@
 
 ElegooCarV3 * car = 0;
 
+// TODO (P0-HIGH: STARTED) Add line-tracking driver option
+// TODO (P1-MED) Reduce/shorten output so that the in-App Bluetooth Terminal can be used to see what the car does
+
 void setup()
 {
 	ElegooCarConfig * carConfig = new ElegooCarConfig();

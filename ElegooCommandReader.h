@@ -17,7 +17,7 @@ private:
 	int cachedCommand = EMPTY_CACHE;
 
 public:
-	// TODO (LOW) If more receivers must be supported, we cannot stick to constructor arguments
+	// TODO (P2-LOW) If more receivers must be supported, we cannot stick to constructor arguments
 	ElegooCommandReader(ElegooInfraredReceiver & pInfraredReceiver, ElegooBluetoothReceiver & pBluetoothReceiver) :
 			infraredReceiver(pInfraredReceiver), bluetoothReceiver(pBluetoothReceiver)
 	{
