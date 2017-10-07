@@ -18,11 +18,15 @@ public:
 
 	virtual int processCommand(ElegooCommand cmd)
 	{
-		// check front sensor and stop
-		const int frontDistance = distUnit.frontDistance();
-		if (frontDistance < safetyDistanceInCM)
+		// TODO duplicate code between manual1 and manual2 algorithms
+		if (cmd == ElegooCommand::NO_COMMAND)
 		{
-			return motorUnit.stopMoving().statusOK();
+			// check front sensor and stop
+			const int frontDistance = distUnit.frontDistance();
+			if (frontDistance < safetyDistanceInCM)
+			{
+				return motorUnit.stopMoving().statusOK();
+			}
 		}
 
 		switch (cmd)

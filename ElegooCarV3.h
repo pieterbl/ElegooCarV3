@@ -153,11 +153,8 @@ public:
 			case ElegooCommand::LINE_TRACKING_DRIVER:
 				return selectDriver(cmd);
 
-			case ElegooCommand::UNK_COMMAND:
-			case ElegooCommand::NO_COMMAND:
-				return ElegooConstants::OK;
-
 			default:
+				// manual drivers do correctly handle UNK_COMMAND and even rely on NO_COMMAND
 				return currentDriver->processCommand(cmd);
 			}
 		}
