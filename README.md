@@ -5,13 +5,13 @@ The idea of the project is to have an object-oriented solution to control the ca
 
 | Feature | Status |
 | :--- | :--- |
-| Bluetooth remote controlled | Implementation available |
-| Infrared remote controlled | Implementation available |
-| Switching driving algorithm via bluetooth remote control | Implementation available |
-| Manual mode 1 (Manual-1), brakes on obstacles | Implementation available. Only moves a short distance at a time
-| Manual mode 2 (Manual-2), brakes on obstacles | Implementation available. Keeps on moving until it gets stopped
-| Automatic mode 1 (Auto-1), continuous driving with obstacle avoidance | Implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
-| Automatic mode 2 (Auto-2), interrupted driving with rescan of environment | Implementation available. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
+| Bluetooth remote controlled | Implemented |
+| Infrared remote controlled | Implemented |
+| Switching driving algorithm via bluetooth remote control | Implemented |
+| Manual mode 1 (Manual-1), brakes on obstacles | Implemented. Only moves a short distance at a time
+| Manual mode 2 (Manual-2), brakes on obstacles | Implemented. Keeps on moving until it gets stopped
+| Automatic mode 1 (Auto-1), continuous driving with obstacle avoidance | Implemented. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
+| Automatic mode 2 (Auto-2), interrupted driving with rescan of environment | Implemented. Has trouble recognizing soft obstacles, smaller obstacles, and walls if approached in angles < 45 degrees or > 135 degrees |
 | Line tracking support | Planned |
 
 ## The Car

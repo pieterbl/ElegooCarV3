@@ -85,13 +85,19 @@ private:
 				new ElegooLineTrackingDriver(safetyDistanceInCM, distUnit, motorUnit);
 	}
 
-	bool isDriver(ElegooCommand newDriver)
+	bool isDriver(ElegooCommand possibleDriver)
 	{
-		return (newDriver == ElegooCommand::MANUAL_DRIVER_1 || //
-				newDriver == ElegooCommand::MANUAL_DRIVER_2 || //
-				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
-				newDriver == ElegooCommand::AUTO_DRIVER_2 || //
-				newDriver == ElegooCommand::LINE_TRACKING_DRIVER);
+		switch (possibleDriver)
+		{
+		case ElegooCommand::MANUAL_DRIVER_1:
+		case ElegooCommand::MANUAL_DRIVER_2:
+		case ElegooCommand::AUTO_DRIVER_1:
+		case ElegooCommand::AUTO_DRIVER_2:
+		case ElegooCommand::LINE_TRACKING_DRIVER:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	int selectDriver(ElegooCommand newDriver)
@@ -144,16 +150,13 @@ public:
 
 		if (usingManualDriver())
 		{
-			switch (cmd)
+			if (isDriver(cmd))
 			{
-			case ElegooCommand::MANUAL_DRIVER_1:
-			case ElegooCommand::MANUAL_DRIVER_2:
-			case ElegooCommand::AUTO_DRIVER_1:
-			case ElegooCommand::AUTO_DRIVER_2:
-			case ElegooCommand::LINE_TRACKING_DRIVER:
+				motorUnit.stopMoving();
 				return selectDriver(cmd);
-
-			default:
+			}
+			else
+			{
 				// manual drivers do correctly handle UNK_COMMAND and even rely on NO_COMMAND
 				return currentDriver->processCommand(cmd);
 			}
