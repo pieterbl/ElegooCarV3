@@ -1,18 +1,18 @@
-#ifndef __ELEGOO_MANUAL_DRIVER_H__
-#define __ELEGOO_MANUAL_DRIVER_H__
+#ifndef __ELEGOO_MANUAL_DRIVER_2_H__
+#define __ELEGOO_MANUAL_DRIVER_2_H__
 
 #include "ElegooDriverBase.h"
 
 // is interruptible
-class ElegooManualDriver: public ElegooDriverBase
+class ElegooManualDriver2: public ElegooDriverBase
 {
 public:
-	ElegooManualDriver(int pSafetyDistanceInCM, ElegooDistanceUnit & pDistUnit, ElegooMotorUnit & pMotorUnit) :
+	ElegooManualDriver2(int pSafetyDistanceInCM, ElegooDistanceUnit & pDistUnit, ElegooMotorUnit & pMotorUnit) :
 			ElegooDriverBase(pSafetyDistanceInCM, pDistUnit, pMotorUnit)
 	{
 	}
 
-	virtual ~ElegooManualDriver()
+	virtual ~ElegooManualDriver2()
 	{
 	}
 
@@ -28,22 +28,22 @@ public:
 		switch (cmd)
 		{
 		case ElegooCommand::MOVE_FORWARDS:
-			return motorUnit.moveForwards(1000).stopMoving().statusOK();
+			return motorUnit.moveForwards().statusOK();
 
 		case ElegooCommand::MOVE_BACKWARDS:
-			return motorUnit.moveBackwards().stopMoving().statusOK();
+			return motorUnit.moveBackwards().statusOK();
 
 		case ElegooCommand::HALF_RIGHT:
-			return motorUnit.turnHalfRight().stopMoving().statusOK();
+			return motorUnit.turnHalfRight().statusOK();
 
 		case ElegooCommand::TURN_RIGHT:
-			return motorUnit.turnRight().stopMoving().statusOK();
+			return motorUnit.turnRight().statusOK();
 
 		case ElegooCommand::HALF_LEFT:
-			return motorUnit.turnHalfLeft().stopMoving().statusOK();
+			return motorUnit.turnHalfLeft().statusOK();
 
 		case ElegooCommand::TURN_LEFT:
-			return motorUnit.turnLeft().stopMoving().statusOK();
+			return motorUnit.turnLeft().statusOK();
 
 		default:
 			return motorUnit.statusOK();

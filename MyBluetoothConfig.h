@@ -31,7 +31,9 @@ public:
 		case 'S':
 			return ElegooCommand::STOP_MOVING;
 		case 'M':
-			return ElegooCommand::MANUAL_DRIVER;
+			return ElegooCommand::MANUAL_DRIVER_1;
+		case 'N':
+			return ElegooCommand::MANUAL_DRIVER_2;
 		case '1':
 			return ElegooCommand::AUTO_DRIVER_1;
 		case '2':

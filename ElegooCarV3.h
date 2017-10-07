@@ -10,13 +10,11 @@
 #include "ElegooBluetoothReceiver.h"
 #include "ElegooCommandReader.h"
 #include "ElegooManualDriver.h"
+#include "ElegooManualDriver2.h"
 #include "ElegooAutomaticDriver1.h"
 #include "ElegooAutomaticDriver2.h"
 #include "ElegooLineTrackingDriver.h"
 
-/*
- * TODO (HIGH: TO-TEST) driving functions can now be interrupted by a button press or so, this must be tested.
- */
 class ElegooCarV3
 {
 private:
@@ -33,7 +31,7 @@ private:
 
 	ElegooCommandReader commandReader;
 
-	ElegooDriverBase * drivers[4];
+	ElegooDriverBase * drivers[5];
 
 	ElegooDriverBase * currentDriver = 0;
 
@@ -71,8 +69,11 @@ public:
 private:
 	void initializeDrivers()
 	{
-		drivers[ElegooCommand::MANUAL_DRIVER] = //
+		drivers[ElegooCommand::MANUAL_DRIVER_1] = //
 				new ElegooManualDriver(safetyDistanceInCM, distUnit, motorUnit);
+
+		drivers[ElegooCommand::MANUAL_DRIVER_2] = //
+				new ElegooManualDriver2(safetyDistanceInCM, distUnit, motorUnit);
 
 		drivers[ElegooCommand::AUTO_DRIVER_1] = //
 				new ElegooAutomaticDriver1(safetyDistanceInCM, distUnit, motorUnit);
@@ -86,7 +87,8 @@ private:
 
 	bool isDriver(ElegooCommand newDriver)
 	{
-		return (newDriver == ElegooCommand::MANUAL_DRIVER || //
+		return (newDriver == ElegooCommand::MANUAL_DRIVER_1 || //
+				newDriver == ElegooCommand::MANUAL_DRIVER_2 || //
 				newDriver == ElegooCommand::AUTO_DRIVER_1 || //
 				newDriver == ElegooCommand::AUTO_DRIVER_2 || //
 				newDriver == ElegooCommand::LINE_TRACKING_DRIVER);
@@ -103,13 +105,14 @@ private:
 
 	bool usingManualDriver()
 	{
-		return (currentDriver == drivers[ElegooCommand::MANUAL_DRIVER]);
+		return (currentDriver == drivers[ElegooCommand::MANUAL_DRIVER_1] || //
+				currentDriver == drivers[ElegooCommand::MANUAL_DRIVER_2]);
 	}
 
 public:
 	int selectManualDriver()
 	{
-		return selectDriver(ElegooCommand::MANUAL_DRIVER);
+		return selectDriver(ElegooCommand::MANUAL_DRIVER_1);
 	}
 
 	void registerInfraredConfig(ElegooInfraredConfigInterface * infraredConfig)
@@ -143,7 +146,8 @@ public:
 		{
 			switch (cmd)
 			{
-			case ElegooCommand::MANUAL_DRIVER:
+			case ElegooCommand::MANUAL_DRIVER_1:
+			case ElegooCommand::MANUAL_DRIVER_2:
 			case ElegooCommand::AUTO_DRIVER_1:
 			case ElegooCommand::AUTO_DRIVER_2:
 			case ElegooCommand::LINE_TRACKING_DRIVER:
@@ -157,10 +161,10 @@ public:
 				return currentDriver->processCommand(cmd);
 			}
 		}
-		else
-		{
-			return currentDriver->processCommand(ElegooCommand::NO_COMMAND);
-		}
+
+		// automatic drivers will/must not listen to commands
+		// they must just get "re-triggered"
+		return currentDriver->processCommand(ElegooCommand::NO_COMMAND);
 	}
 
 	void testDistanceUnit()

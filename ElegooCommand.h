@@ -3,9 +3,10 @@
 
 enum ElegooCommand // TODO (HIGH: STARTED) Add line-tracking driver option
 {
-	MANUAL_DRIVER = 0, //
-	AUTO_DRIVER_1 = 1,
-	AUTO_DRIVER_2 = 2,
+	MANUAL_DRIVER_1 = 0, //
+	MANUAL_DRIVER_2 = 1,
+	AUTO_DRIVER_1 = 2,
+	AUTO_DRIVER_2 = 3,
 	LINE_TRACKING_DRIVER,
 	MOVE_FORWARDS,
 	MOVE_BACKWARDS,
@@ -30,8 +31,10 @@ public:
 	{
 		switch (cmd)
 		{
-		case MANUAL_DRIVER:
-			return "Select Manual Driver";
+		case MANUAL_DRIVER_1:
+			return "Select Manual Driver 1";
+		case MANUAL_DRIVER_2:
+			return "Select Manual Driver 2";
 		case AUTO_DRIVER_1:
 			return "Select Autonomous Driver 1";
 		case AUTO_DRIVER_2:

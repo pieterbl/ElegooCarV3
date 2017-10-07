@@ -65,8 +65,8 @@ The bluetooth app must be configured in the following way:
 | :--- | :--- | :--- |
 | Half Left (\\)  | Forward (F) | Half Right (/) |
 | Left (L)  | Stop (S) | Right (R) |
-| Manual (M) | Backward (B) | _empty_ |
-| Auto-1 (1)  | Auto-2 (2)  | _empty_  |
+| Manual-1 (M) | Backward (B) | Auto-1 (1) |
+| Manual-2 (N)  | _empty_  | Auto-2 (2)  |
 
 
 
